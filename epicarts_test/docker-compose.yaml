@@ -4,15 +4,25 @@ volumes:
   data: {}
 services:
   mariadb:
-    image: debian:buster
+    build : ./mariaDB/
     restart: always
     expose:
       - "3306"
     networks:
       - intra
     tty: true
+  wordpress:
+   build: ./wordpress/
+   restart: always
+   volumes:
+     - data:/var/www/html
+   expose:
+     - "9000"
+   networks:
+     - intra
+   tty: true
   nginx:
-    image: debian:buster
+    build: ./nginx/
     restart: always
     ports:
       - "443:443"
@@ -21,17 +31,6 @@ services:
     networks:
       - intra
     tty: true
-  wordpress:
-    image: debian:buster
-    restart: always
-    volumes:
-      - data:/var/www/html
-    expose:
-      - "9000"
-    networks:
-      - intra
-    tty: true
-
 networks:
   intra:
     driver: bridge
