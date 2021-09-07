@@ -12,15 +12,15 @@ services:
       - intra
     tty: true
   wordpress:
-   build: ./wordpress/
-   restart: always
-   volumes:
-     - data:/var/www/html
-   expose:
-     - "9000"
-   networks:
-     - intra
-   tty: true
+    build: ./wordpress/
+    restart: always
+    volumes:
+      - data:/var/www/html
+    expose:
+      - "9000"
+    networks:
+      - intra
+    tty: true
   nginx:
     build: ./nginx/
     restart: always

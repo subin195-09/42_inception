@@ -24,16 +24,15 @@ RUN		apt-get update -y; \
 		sendmail \
 		vim
 
-VOLUME	[ "/var/www/html" ]
 RUN		mkdir -p /var/www/html
+
+VOLUME	[ "/var/www/html" ]
 
 RUN		wget https://wordpress.org/latest.tar.gz; \
 		tar -xvf latest.tar.gz
 
 RUN		cp -r /wordpress/* /var/www/html/
-
-RUN		chown -R www-data:www-data /var/www/html; \
-		rm -r /wordpress latest.tar.gz
+RUN		chown -R www-data:www-data /var/www/html
 
 # wp-config.php 파일 수정
 RUN		mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php; \
@@ -43,12 +42,12 @@ RUN		mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php; \
 		sed -i "s/localhost/${MARIADB_IP}/g" /var/www/html/wp-config.php
 
 # php-fpm 설정 파일 수정
+# / 생기는거 수정 해야함
 RUN		sed -i "s/run\/php\/php7.3-fpm.sock/${WP_PORT}/g" /etc/php/7.3/fpm/pool.d/www.conf
 
-RUN		service php7.3-fpm start
 
-# hostname -i : wordpress 컨테이너 IP주소 받아서 기억해두기
-# 172.30.0.4
+# 포그라운드로 돌리는 법 찾아야함
+RUN		service php7.3-fpm start
 
 EXPOSE 9000
 

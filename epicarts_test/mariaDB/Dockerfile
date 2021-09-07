@@ -20,9 +20,6 @@ RUN		service mysql start; \
 		GRANT ALL PRIVILEGES ON ${WP_NAME}.* TO '${WP_USER}'@'%'; \
 		FLUSH PRIVILEGES;"
 
-# hostname -i : mariadb 컨테이너 IP주소 받아서 기억해두기
-# 172.30.0.2
-
 EXPOSE	3306
 
 CMD		[ "mysqld" ]
