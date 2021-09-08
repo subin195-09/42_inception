@@ -43,12 +43,9 @@ RUN		mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php; \
 
 # php-fpm 설정 파일 수정
 # / 생기는거 수정 해야함
-RUN		sed -i "s/run\/php\/php7.3-fpm.sock/${WP_PORT}/g" /etc/php/7.3/fpm/pool.d/www.conf
-
+RUN		echo "listen = ${WP_PORT}" >> /etc/php/7.3/fpm/pool.d/www.conf
 
 # 포그라운드로 돌리는 법 찾아야함
 RUN		service php7.3-fpm start
 
 EXPOSE 9000
-
-# CMD [ "php7.3-fpm", "-F", "-R" ];

@@ -22,6 +22,8 @@ services:
       - intra
     tty: true
   nginx:
+    depends_on:
+      - wordpress
     build: ./nginx/
     restart: always
     ports:
