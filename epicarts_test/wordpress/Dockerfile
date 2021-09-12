@@ -31,7 +31,9 @@ VOLUME	[ "/var/www/html" ]
 RUN		wget https://wordpress.org/latest.tar.gz; \
 		tar -xvf latest.tar.gz
 
-RUN		cp -r /wordpress/* /var/www/html/
+RUN		cp -r /wordpress/* /var/www/html/; \
+		rm -rf /wordpress /latest.tar.gz
+
 RUN		chown -R www-data:www-data /var/www/html
 
 # wp-config.php 파일 수정
@@ -43,9 +45,12 @@ RUN		mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php; \
 
 # php-fpm 설정 파일 수정
 # / 생기는거 수정 해야함
-RUN		echo "listen = ${WP_PORT}" >> /etc/php/7.3/fpm/pool.d/www.conf
+RUN		echo "listen = ${WP_PORT}" >> /etc/php/7.3/fpm/pool.d/www.conf; \
+		sed -i "s/;daemonize = yes/daemonize = no/g" /etc/php/7.3/fpm/php-fpm.conf
 
-# 포그라운드로 돌리는 법 찾아야함
-RUN		service php7.3-fpm start
+# # 포그라운드로 돌리는 법 찾아야함
+# RUN		service php7.3-fpm start
+
+RUN /bin/sh php-fpm7.3 -F -c /etc/php/7.3/fpm/php-fpm.conf
 
 EXPOSE 9000
