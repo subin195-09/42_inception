@@ -1,11 +1,14 @@
 version: '3'
 
 volumes:
-  data: {}
+  wp_data: {}
+  db_data: {}
 services:
   mariadb:
     build : ./mariaDB/
     restart: always
+    volumes:
+      - db_data:/var/lib/mysql
     expose:
       - "3306"
     networks:
@@ -15,7 +18,7 @@ services:
     build: ./wordpress/
     restart: always
     volumes:
-      - data:/var/www/html
+      - wp_data:/var/www/html
     expose:
       - "9000"
     networks:
@@ -25,11 +28,14 @@ services:
     depends_on:
       - wordpress
     build: ./nginx/
+    environment:
+      VIRTUAL_HOST: skim.42.fr
     restart: always
     ports:
       - "443:443"
+    hostname: skim.42.fr
     volumes:
-      - data:/var/www/html
+      - wp_data:/var/www/html
     networks:
       - intra
     tty: true

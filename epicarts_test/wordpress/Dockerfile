@@ -26,8 +26,6 @@ RUN		apt-get update -y; \
 
 RUN		mkdir -p /var/www/html
 
-VOLUME	[ "/var/www/html" ]
-
 RUN		wget https://wordpress.org/latest.tar.gz; \
 		tar -xvf latest.tar.gz
 
@@ -48,9 +46,8 @@ RUN		mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php; \
 RUN		echo "listen = ${WP_PORT}" >> /etc/php/7.3/fpm/pool.d/www.conf; \
 		sed -i "s/;daemonize = yes/daemonize = no/g" /etc/php/7.3/fpm/php-fpm.conf
 
-# # 포그라운드로 돌리는 법 찾아야함
-# RUN		service php7.3-fpm start
-
-RUN /bin/sh php-fpm7.3 -F -c /etc/php/7.3/fpm/php-fpm.conf
+RUN		mkdir -p /run/php
 
 EXPOSE 9000
+
+CMD [ "/usr/sbin/php-fpm7.3" ]

@@ -3,10 +3,12 @@ FROM	debian:buster
 LABEL	maintainer="skim@student.42seoul.kr"
 
 COPY	./conf/default /
+COPY	./conf/hosts /etc/
 
 VOLUME	[ "/var/www/html" ]
 
 RUN		apt-get update -y; apt-get upgrade -y; \
+		apt-get install -y dumb-init; \
 		apt-get install -y nginx openssl vim
 
 RUN		openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
@@ -14,6 +16,8 @@ RUN		openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 		-keyout /etc/ssl/private/server_pkey.pem -out /etc/ssl/certs/server.crt;
 
 RUN		cp /default /etc/nginx/sites-available/default;
+
+ENTRYPOINT  ["/usr/bin/dumb-init"]
 
 EXPOSE	443
 
