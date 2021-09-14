@@ -2,9 +2,6 @@ FROM	debian:buster
 
 LABEL	maintainer="skim@student.42seoul.kr"
 
-COPY	./conf/default /
-COPY	./conf/hosts /etc/
-
 VOLUME	[ "/var/www/html" ]
 
 RUN		apt-get update -y; apt-get upgrade -y; \
@@ -12,10 +9,11 @@ RUN		apt-get update -y; apt-get upgrade -y; \
 		apt-get install -y nginx openssl vim
 
 RUN		openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-		-subj "/C=KR/ST=Seoul/L=Seoul/O=42Seoul/OU=skim/CN=localhost" \
-		-keyout /etc/ssl/private/server_pkey.pem -out /etc/ssl/certs/server.crt;
+		-subj "/C=KR/ST=Seoul/L=Seoul/O=42Seoul/OU=skim/CN=skim.42.fr" \
+		-keyout /etc/ssl/private/skim.key -out /etc/ssl/certs/skim.crt;
 
-RUN		cp /default /etc/nginx/sites-available/default;
+COPY	./conf/nginx.conf /etc/nginx/nginx.conf
+COPY	./conf/hosts /etc/
 
 ENTRYPOINT  ["/usr/bin/dumb-init"]
 

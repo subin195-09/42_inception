@@ -1,15 +1,16 @@
 server {
 	listen 443 ssl;
 	listen [::]:443 ssl;
+	ssl on;
 
 	server_name skim.42.fr;
 
-	ssl_protocols TLSv1.2 TLSv1.3;
-	ssl_certificate /etc/ssl/certs/server.crt;
-	ssl_certificate_key /etc/ssl/private/server_pkey.pem;
-
 	root /var/www/html;
 	index index.php index.html index.htm;
+
+	ssl_protocols TLSv1.2 TLSv1.3;
+	ssl_certificate /etc/ssl/certs/skim.crt;
+	ssl_certificate_key /etc/ssl/private/skim.key;
 
 	location / {
 		try_files $uri $uri/ =404;

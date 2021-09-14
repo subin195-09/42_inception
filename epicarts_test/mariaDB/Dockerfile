@@ -8,7 +8,8 @@ ARG		WP_PWD=1234
 
 RUN		apt-get update -y; \
 		apt-get upgrade -y; \
-		apt-get -y install mariadb-server
+		apt-get -y install mariadb-server; \
+		apt-get -y install dumb-init
 
 RUN		sed -i 's/bind-address/#bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf
 
@@ -19,6 +20,8 @@ RUN		service mysql start; \
 		CREATE USER '${WP_USER}'@'%' IDENTIFIED BY '${WP_PWD}'; \
 		GRANT ALL PRIVILEGES ON ${WP_NAME}.* TO '${WP_USER}'@'%'; \
 		FLUSH PRIVILEGES;"
+
+ENTRYPOINT [ "/usr/bin/dumb-init" ]
 
 EXPOSE	3306
 

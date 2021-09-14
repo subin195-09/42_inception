@@ -17,12 +17,9 @@ RUN		apt-get update -y; \
 		php-fpm \
 		php-cli \
 		wget \
-		curl \
 		php-mysql \
-		php-mbstring \
-		php-xml \
-		sendmail \
-		vim
+		vim \
+		dumb-init
 
 RUN		mkdir -p /var/www/html
 
@@ -47,6 +44,8 @@ RUN		echo "listen = ${WP_PORT}" >> /etc/php/7.3/fpm/pool.d/www.conf; \
 		sed -i "s/;daemonize = yes/daemonize = no/g" /etc/php/7.3/fpm/php-fpm.conf
 
 RUN		mkdir -p /run/php
+
+ENTRYPOINT	["/usr/bin/dumb-init"]
 
 EXPOSE 9000
 
