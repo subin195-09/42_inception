@@ -13,8 +13,12 @@ services:
       - "3306"
     networks:
       - intra
+    env_file: .env
     tty: true
+
   wordpress:
+    depends_on:
+      - mariadb
     build: ./requirements/wordpress/
     restart: always
     volumes:
@@ -23,13 +27,13 @@ services:
       - "9000"
     networks:
       - intra
+    env_file: .env
     tty: true
+
   nginx:
     depends_on:
       - wordpress
     build: ./requirements/nginx/
-    environment:
-      VIRTUAL_HOST: skim.42.fr
     restart: always
     ports:
       - "443:443"
