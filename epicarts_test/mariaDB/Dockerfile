@@ -11,8 +11,6 @@ RUN		apt-get update -y; \
 		apt-get -y install mariadb-server; \
 		apt-get -y install dumb-init
 
-RUN		sed -i 's/bind-address/#bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf
-
 # 설정 파일 수정
 
 RUN		service mysql start; \

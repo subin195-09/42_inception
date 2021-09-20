@@ -25,15 +25,12 @@ RUN		cp -r /wordpress/* /var/www/html/; \
 
 RUN		chown -R www-data:www-data /var/www/html
 
-# wp-config.php 파일 수정
-RUN		mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php; \
-		sed -i "s/database_name_here/$WP_NAME/g" /var/www/html/wp-config.php; \
-		sed -i "s/username_here/$WP_USER/g" /var/www/html/wp-config.php; \
-		sed -i "s/password_here/$WP_PWD/g" /var/www/html/wp-config.php; \
-		sed -i "s/localhost/mariadb/g" /var/www/html/wp-config.php
+COPY	./set_up.sh /
 
-# php-fpm 설정 파일 수정
-RUN		echo "listen = 0.0.0.0:9000" >> /etc/php/7.3/fpm/pool.d/www.conf; \
+RUN		chmod 777 /set_up.sh
+
+RUN		mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php; \
+		echo "listen = 0.0.0.0:9000" >> /etc/php/7.3/fpm/pool.d/www.conf; \
 		sed -i "s/;daemonize = yes/daemonize = no/g" /etc/php/7.3/fpm/php-fpm.conf
 
 RUN		mkdir -p /run/php
@@ -42,4 +39,4 @@ ENTRYPOINT	["/usr/bin/dumb-init"]
 
 EXPOSE 9000
 
-CMD [ "/usr/sbin/php-fpm7.3" ]
+CMD [ "/set_up.sh" ]
