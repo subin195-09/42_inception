@@ -12,8 +12,7 @@ RUN		openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 		-subj "/C=KR/ST=Seoul/L=Seoul/O=42Seoul/OU=skim/CN=skim.42.fr" \
 		-keyout /etc/ssl/private/skim.key -out /etc/ssl/certs/skim.crt;
 
-COPY	./conf/nginx.conf /etc/nginx/nginx.conf
-COPY	./conf/hosts /etc/
+COPY	./conf/default /etc/nginx/sites-available/default
 
 ENTRYPOINT  ["/usr/bin/dumb-init"]
 
