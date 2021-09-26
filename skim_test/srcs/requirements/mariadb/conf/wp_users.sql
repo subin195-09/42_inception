@@ -1,16 +1,48 @@
+-- phpMyAdmin SQL Dump
+-- version 5.0.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- 생성 시간: 21-09-26 08:24
+-- 서버 버전: 10.3.29-MariaDB-0+deb10u1
+-- PHP 버전: 7.3.29-1~deb10u1
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- 데이터베이스: `wordpress`
+--
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `wp_commentmeta`
+--
+
 CREATE TABLE `wp_commentmeta` (
-  `meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `comment_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `meta_id` bigint(20) UNSIGNED NOT NULL,
+  `comment_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `meta_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_value` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`meta_id`),
-  KEY `comment_id` (`comment_id`),
-  KEY `meta_key` (`meta_key`(191))
+  `meta_value` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `wp_comments`
+--
+
 CREATE TABLE `wp_comments` (
-  `comment_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `comment_post_ID` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `comment_ID` bigint(20) UNSIGNED NOT NULL,
+  `comment_post_ID` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `comment_author` tinytext COLLATE utf8mb4_unicode_ci NOT NULL,
   `comment_author_email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `comment_author_url` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -22,81 +54,228 @@ CREATE TABLE `wp_comments` (
   `comment_approved` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
   `comment_agent` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `comment_type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'comment',
-  `comment_parent` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `user_id` bigint(20) unsigned NOT NULL DEFAULT 0,
-  PRIMARY KEY (`comment_ID`),
-  KEY `comment_post_ID` (`comment_post_ID`),
-  KEY `comment_approved_date_gmt` (`comment_approved`,`comment_date_gmt`),
-  KEY `comment_date_gmt` (`comment_date_gmt`),
-  KEY `comment_parent` (`comment_parent`),
-  KEY `comment_author_email` (`comment_author_email`(10))
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `comment_parent` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `user_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `wp_comments` VALUES (1,1,'워드프레스 댓글 작성자','wapuu@wordpress.example','https://wordpress.org/','','2021-07-08 19:50:16','2021-07-08 10:50:16','안녕하세요? 여기는 댓글입니다.\n댓글의 관리, 편집, 삭제를 시작하려면, 알림판의 댓글 화면을 방문해주세요.\n댓글 아바타는 <a href=\"https://gravatar.com\">그라바타</a>에서 옵니다.',0,'1','','comment',0,0);
+--
+-- 테이블의 덤프 데이터 `wp_comments`
+--
+
+INSERT INTO `wp_comments` (`comment_ID`, `comment_post_ID`, `comment_author`, `comment_author_email`, `comment_author_url`, `comment_author_IP`, `comment_date`, `comment_date_gmt`, `comment_content`, `comment_karma`, `comment_approved`, `comment_agent`, `comment_type`, `comment_parent`, `user_id`) VALUES
+(1, 1, '워드프레스 댓글 작성자', 'wapuu@wordpress.example', 'https://wordpress.org/', '', '2021-09-26 17:21:23', '2021-09-26 08:21:23', '안녕하세요, 이것은 댓글입니다.\n댓글의 검토, 편집, 삭제를 시작하려면 관리자 화면의 댓글 화면으로 가세요.\n댓글 작성자의 아바타는 <a href=\"https://gravatar.com\">그라바타</a>에서 전송됩니다.', 0, '1', '', 'comment', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `wp_links`
+--
 
 CREATE TABLE `wp_links` (
-  `link_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `link_id` bigint(20) UNSIGNED NOT NULL,
   `link_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `link_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `link_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `link_target` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `link_description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `link_visible` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
-  `link_owner` bigint(20) unsigned NOT NULL DEFAULT 1,
+  `link_owner` bigint(20) UNSIGNED NOT NULL DEFAULT 1,
   `link_rating` int(11) NOT NULL DEFAULT 0,
   `link_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `link_rel` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `link_notes` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `link_rss` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`link_id`),
-  KEY `link_visible` (`link_visible`)
+  `link_rss` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `wp_options`
+--
+
 CREATE TABLE `wp_options` (
-  `option_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `option_id` bigint(20) UNSIGNED NOT NULL,
   `option_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `option_value` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `autoload` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes',
-  PRIMARY KEY (`option_id`),
-  UNIQUE KEY `option_name` (`option_name`),
-  KEY `autoload` (`autoload`)
-) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `autoload` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 나중에 확인해볼것!
+--
+-- 테이블의 덤프 데이터 `wp_options`
+--
 
-INSERT INTO `wp_options` VALUES (1,'siteurl','https://skim.42.fr','yes'),(2,'home','https://skim.42.fr','yes'),(3,'blogname','노랑시티','yes'),(4,'blogdescription','다른 워드프레스 사이트','yes'),(5,'users_can_register','0','yes'),(6,'admin_email','example@example.com','yes'),(7,'start_of_week','0','yes'),(8,'use_balanceTags','0','yes'),(9,'use_smilies','1','yes'),(10,'require_name_email','1','yes'),(11,'comments_notify','1','yes'),(12,'posts_per_rss','10','yes'),(13,'rss_use_excerpt','0','yes'),(14,'mailserver_url','mail.example.com','yes'),(15,'mailserver_login','login@example.com','yes'),(16,'mailserver_pass','password','yes'),(17,'mailserver_port','110','yes'),(18,'default_category','1','yes'),(19,'default_comment_status','open','yes'),(20,'default_ping_status','open','yes'),(21,'default_pingback_flag','1','yes'),(22,'posts_per_page','10','yes'),(23,'date_format','Y년 m월 d일','yes'),(24,'time_format','g:i a','yes'),(25,'links_updated_date_format','Y년 F j일 g:i a','yes'),(26,'comment_moderation','0','yes'),(27,'moderation_notify','1','yes'),(28,'permalink_structure','','yes'),(29,'rewrite_rules','','yes'),(30,'hack_file','0','yes'),(31,'blog_charset','UTF-8','yes'),(32,'moderation_keys','','no'),(33,'active_plugins','a:0:{}','yes'),(34,'category_base','','yes'),(35,'ping_sites','http://rpc.pingomatic.com/','yes'),(36,'comment_max_links','2','yes'),(37,'gmt_offset','0','yes'),(38,'default_email_category','1','yes'),(39,'recently_edited','','no'),(40,'template','twentytwentyone','yes'),(41,'stylesheet','twentytwentyone','yes'),(42,'comment_registration','0','yes'),(43,'html_type','text/html','yes'),(44,'use_trackback','0','yes'),(45,'default_role','subscriber','yes'),(46,'db_version','49752','yes'),(47,'uploads_use_yearmonth_folders','1','yes'),(48,'upload_path','','yes'),(49,'blog_public','1','yes'),(50,'default_link_category','2','yes'),(51,'show_on_front','page','yes'),(52,'tag_base','','yes'),(53,'show_avatars','1','yes'),(54,'avatar_rating','G','yes'),(55,'upload_url_path','','yes'),(56,'thumbnail_size_w','150','yes'),(57,'thumbnail_size_h','150','yes'),(58,'thumbnail_crop','1','yes'),(59,'medium_size_w','300','yes'),(60,'medium_size_h','300','yes'),(61,'avatar_default','mystery','yes'),(62,'large_size_w','1024','yes'),(63,'large_size_h','1024','yes'),(64,'image_default_link_type','none','yes'),(65,'image_default_size','','yes'),(66,'image_default_align','','yes'),(67,'close_comments_for_old_posts','0','yes'),(68,'close_comments_days_old','14','yes'),(69,'thread_comments','1','yes'),(70,'thread_comments_depth','5','yes'),(71,'page_comments','0','yes'),(72,'comments_per_page','50','yes'),(73,'default_comments_page','newest','yes'),(74,'comment_order','asc','yes'),(75,'sticky_posts','a:0:{}','yes'),(76,'widget_categories','a:2:{i:2;a:4:{s:5:\"title\";s:0:\"\";s:5:\"count\";i:0;s:12:\"hierarchical\";i:0;s:8:\"dropdown\";i:0;}s:12:\"_multiwidget\";i:1;}','yes'),(77,'widget_text','a:2:{i:1;a:0:{}s:12:\"_multiwidget\";i:1;}','yes'),(78,'widget_rss','a:2:{i:1;a:0:{}s:12:\"_multiwidget\";i:1;}','yes'),(79,'uninstall_plugins','a:0:{}','no'),(80,'timezone_string','Asia/Seoul','yes'),(81,'page_for_posts','18','yes'),(82,'page_on_front','15','yes'),(83,'default_post_format','0','yes'),(84,'link_manager_enabled','0','yes'),(85,'finished_splitting_shared_terms','1','yes'),(86,'site_icon','0','yes'),(87,'medium_large_size_w','768','yes'),(88,'medium_large_size_h','0','yes'),(89,'wp_page_for_privacy_policy','3','yes'),(90,'show_comments_cookies_opt_in','1','yes'),(91,'admin_email_lifespan','1641293416','yes'),(92,'disallowed_keys','','no'),(93,'comment_previously_approved','1','yes'),(94,'auto_plugin_theme_update_emails','a:0:{}','no'),(95,'auto_update_core_dev','enabled','yes'),(96,'auto_update_core_minor','enabled','yes'),(97,'auto_update_core_major','enabled','yes'),(98,'initial_db_version','49752','yes'),(99,'wp_user_roles','a:5:{s:13:\"administrator\";a:2:{s:4:\"name\";s:13:\"Administrator\";s:12:\"capabilities\";a:61:{s:13:\"switch_themes\";b:1;s:11:\"edit_themes\";b:1;s:16:\"activate_plugins\";b:1;s:12:\"edit_plugins\";b:1;s:10:\"edit_users\";b:1;s:10:\"edit_files\";b:1;s:14:\"manage_options\";b:1;s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:6:\"import\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:8:\"level_10\";b:1;s:7:\"level_9\";b:1;s:7:\"level_8\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;s:12:\"delete_users\";b:1;s:12:\"create_users\";b:1;s:17:\"unfiltered_upload\";b:1;s:14:\"edit_dashboard\";b:1;s:14:\"update_plugins\";b:1;s:14:\"delete_plugins\";b:1;s:15:\"install_plugins\";b:1;s:13:\"update_themes\";b:1;s:14:\"install_themes\";b:1;s:11:\"update_core\";b:1;s:10:\"list_users\";b:1;s:12:\"remove_users\";b:1;s:13:\"promote_users\";b:1;s:18:\"edit_theme_options\";b:1;s:13:\"delete_themes\";b:1;s:6:\"export\";b:1;}}s:6:\"editor\";a:2:{s:4:\"name\";s:6:\"Editor\";s:12:\"capabilities\";a:34:{s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;}}s:6:\"author\";a:2:{s:4:\"name\";s:6:\"Author\";s:12:\"capabilities\";a:10:{s:12:\"upload_files\";b:1;s:10:\"edit_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;s:22:\"delete_published_posts\";b:1;}}s:11:\"contributor\";a:2:{s:4:\"name\";s:11:\"Contributor\";s:12:\"capabilities\";a:5:{s:10:\"edit_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;}}s:10:\"subscriber\";a:2:{s:4:\"name\";s:10:\"Subscriber\";s:12:\"capabilities\";a:2:{s:4:\"read\";b:1;s:7:\"level_0\";b:1;}}}','yes'),(100,'fresh_site','0','yes'),(101,'WPLANG','ko_KR','yes'),(102,'widget_search','a:2:{i:2;a:1:{s:5:\"title\";s:0:\"\";}s:12:\"_multiwidget\";i:1;}','yes'),(103,'widget_recent-posts','a:2:{i:2;a:2:{s:5:\"title\";s:0:\"\";s:6:\"number\";i:5;}s:12:\"_multiwidget\";i:1;}','yes'),(104,'widget_recent-comments','a:2:{i:2;a:2:{s:5:\"title\";s:0:\"\";s:6:\"number\";i:5;}s:12:\"_multiwidget\";i:1;}','yes'),(105,'widget_archives','a:2:{i:2;a:3:{s:5:\"title\";s:0:\"\";s:5:\"count\";i:0;s:8:\"dropdown\";i:0;}s:12:\"_multiwidget\";i:1;}','yes'),(106,'widget_meta','a:2:{i:2;a:1:{s:5:\"title\";s:0:\"\";}s:12:\"_multiwidget\";i:1;}','yes'),(107,'sidebars_widgets','a:4:{s:19:\"wp_inactive_widgets\";a:0:{}s:9:\"sidebar-1\";a:3:{i:0;s:8:\"search-2\";i:1;s:14:\"recent-posts-2\";i:2;s:17:\"recent-comments-2\";}s:9:\"sidebar-2\";a:3:{i:0;s:10:\"archives-2\";i:1;s:12:\"categories-2\";i:2;s:6:\"meta-2\";}s:13:\"array_version\";i:3;}','yes'),(108,'cron','a:6:{i:1625741429;a:6:{s:32:\"recovery_mode_clean_expired_keys\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:5:\"daily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:86400;}}s:18:\"wp_https_detection\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}s:34:\"wp_privacy_delete_old_export_files\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:6:\"hourly\";s:4:\"args\";a:0:{}s:8:\"interval\";i:3600;}}s:16:\"wp_version_check\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}s:17:\"wp_update_plugins\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}s:16:\"wp_update_themes\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}}i:1625741434;a:2:{s:19:\"wp_scheduled_delete\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:5:\"daily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:86400;}}s:25:\"delete_expired_transients\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:5:\"daily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:86400;}}}i:1625741438;a:1:{s:30:\"wp_scheduled_auto_draft_delete\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:5:\"daily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:86400;}}}i:1625741494;a:1:{s:28:\"wp_update_comment_type_batch\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:2:{s:8:\"schedule\";b:0;s:4:\"args\";a:0:{}}}}i:1625827829;a:1:{s:30:\"wp_site_health_scheduled_check\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:6:\"weekly\";s:4:\"args\";a:0:{}s:8:\"interval\";i:604800;}}}s:7:\"version\";i:2;}','yes'),(109,'widget_pages','a:1:{s:12:\"_multiwidget\";i:1;}','yes'),(110,'widget_calendar','a:1:{s:12:\"_multiwidget\";i:1;}','yes'),(111,'widget_media_audio','a:1:{s:12:\"_multiwidget\";i:1;}','yes'),(112,'widget_media_image','a:1:{s:12:\"_multiwidget\";i:1;}','yes'),(113,'widget_media_gallery','a:1:{s:12:\"_multiwidget\";i:1;}','yes'),(114,'widget_media_video','a:1:{s:12:\"_multiwidget\";i:1;}','yes'),(115,'widget_tag_cloud','a:1:{s:12:\"_multiwidget\";i:1;}','yes'),(116,'widget_nav_menu','a:1:{s:12:\"_multiwidget\";i:1;}','yes'),(117,'widget_custom_html','a:1:{s:12:\"_multiwidget\";i:1;}','yes'),(118,'_transient_doing_cron','1625741861.6613459587097167968750','yes'),(119,'_site_transient_update_core','O:8:\"stdClass\":4:{s:7:\"updates\";a:1:{i:0;O:8:\"stdClass\":10:{s:8:\"response\";s:6:\"latest\";s:8:\"download\";s:65:\"https://downloads.wordpress.org/release/ko_KR/wordpress-5.7.2.zip\";s:6:\"locale\";s:5:\"ko_KR\";s:8:\"packages\";O:8:\"stdClass\":5:{s:4:\"full\";s:65:\"https://downloads.wordpress.org/release/ko_KR/wordpress-5.7.2.zip\";s:10:\"no_content\";s:0:\"\";s:11:\"new_bundled\";s:0:\"\";s:7:\"partial\";s:0:\"\";s:8:\"rollback\";s:0:\"\";}s:7:\"current\";s:5:\"5.7.2\";s:7:\"version\";s:5:\"5.7.2\";s:11:\"php_version\";s:6:\"5.6.20\";s:13:\"mysql_version\";s:3:\"5.0\";s:11:\"new_bundled\";s:3:\"5.6\";s:15:\"partial_version\";s:0:\"\";}}s:12:\"last_checked\";i:1625741435;s:15:\"version_checked\";s:5:\"5.7.2\";s:12:\"translations\";a:0:{}}','no'),(120,'_site_transient_update_plugins','O:8:\"stdClass\":4:{s:12:\"last_checked\";i:1625741435;s:8:\"response\";a:1:{s:19:\"akismet/akismet.php\";O:8:\"stdClass\":12:{s:2:\"id\";s:21:\"w.org/plugins/akismet\";s:4:\"slug\";s:7:\"akismet\";s:6:\"plugin\";s:19:\"akismet/akismet.php\";s:11:\"new_version\";s:6:\"4.1.10\";s:3:\"url\";s:38:\"https://wordpress.org/plugins/akismet/\";s:7:\"package\";s:57:\"https://downloads.wordpress.org/plugin/akismet.4.1.10.zip\";s:5:\"icons\";a:2:{s:2:\"2x\";s:59:\"https://ps.w.org/akismet/assets/icon-256x256.png?rev=969272\";s:2:\"1x\";s:59:\"https://ps.w.org/akismet/assets/icon-128x128.png?rev=969272\";}s:7:\"banners\";a:1:{s:2:\"1x\";s:61:\"https://ps.w.org/akismet/assets/banner-772x250.jpg?rev=479904\";}s:11:\"banners_rtl\";a:0:{}s:6:\"tested\";s:3:\"5.8\";s:12:\"requires_php\";b:0;s:13:\"compatibility\";O:8:\"stdClass\":0:{}}}s:12:\"translations\";a:2:{i:0;a:7:{s:4:\"type\";s:6:\"plugin\";s:4:\"slug\";s:7:\"akismet\";s:8:\"language\";s:5:\"ko_KR\";s:7:\"version\";s:5:\"4.1.9\";s:7:\"updated\";s:19:\"2020-10-22 19:38:32\";s:7:\"package\";s:74:\"https://downloads.wordpress.org/translation/plugin/akismet/4.1.9/ko_KR.zip\";s:10:\"autoupdate\";b:1;}i:1;a:7:{s:4:\"type\";s:6:\"plugin\";s:4:\"slug\";s:11:\"hello-dolly\";s:8:\"language\";s:5:\"ko_KR\";s:7:\"version\";s:5:\"1.7.2\";s:7:\"updated\";s:19:\"2020-06-25 18:32:21\";s:7:\"package\";s:78:\"https://downloads.wordpress.org/translation/plugin/hello-dolly/1.7.2/ko_KR.zip\";s:10:\"autoupdate\";b:1;}}s:9:\"no_update\";a:1:{s:9:\"hello.php\";O:8:\"stdClass\":9:{s:2:\"id\";s:25:\"w.org/plugins/hello-dolly\";s:4:\"slug\";s:11:\"hello-dolly\";s:6:\"plugin\";s:9:\"hello.php\";s:11:\"new_version\";s:5:\"1.7.2\";s:3:\"url\";s:42:\"https://wordpress.org/plugins/hello-dolly/\";s:7:\"package\";s:60:\"https://downloads.wordpress.org/plugin/hello-dolly.1.7.2.zip\";s:5:\"icons\";a:2:{s:2:\"2x\";s:64:\"https://ps.w.org/hello-dolly/assets/icon-256x256.jpg?rev=2052855\";s:2:\"1x\";s:64:\"https://ps.w.org/hello-dolly/assets/icon-128x128.jpg?rev=2052855\";}s:7:\"banners\";a:1:{s:2:\"1x\";s:66:\"https://ps.w.org/hello-dolly/assets/banner-772x250.jpg?rev=2052855\";}s:11:\"banners_rtl\";a:0:{}}}}','no'),(121,'_site_transient_timeout_theme_roots','1625743360','no'),(122,'_site_transient_theme_roots','a:1:{s:15:\"twentytwentyone\";s:7:\"/themes\";}','no'),(124,'_site_transient_timeout_browser_fe1b02ffcea6c8a9f33bb0dcd9b1aff3','1626346237','no'),(125,'_site_transient_browser_fe1b02ffcea6c8a9f33bb0dcd9b1aff3','a:10:{s:4:\"name\";s:6:\"Chrome\";s:7:\"version\";s:13:\"91.0.4472.114\";s:8:\"platform\";s:5:\"Linux\";s:10:\"update_url\";s:29:\"https://www.google.com/chrome\";s:7:\"img_src\";s:43:\"http://s.w.org/images/browsers/chrome.png?1\";s:11:\"img_src_ssl\";s:44:\"https://s.w.org/images/browsers/chrome.png?1\";s:15:\"current_version\";s:2:\"18\";s:7:\"upgrade\";b:0;s:8:\"insecure\";b:0;s:6:\"mobile\";b:0;}','no'),(126,'_site_transient_timeout_php_check_009c6eb5b40f6e5b9ba52ef6dc06f73a','1626346238','no'),(127,'_site_transient_php_check_009c6eb5b40f6e5b9ba52ef6dc06f73a','a:5:{s:19:\"recommended_version\";s:3:\"7.4\";s:15:\"minimum_version\";s:6:\"5.6.20\";s:12:\"is_supported\";b:0;s:9:\"is_secure\";b:1;s:13:\"is_acceptable\";b:1;}','no'),(128,'_transient_timeout_dash_v2_16e5162baedbebe7a1904fee5fde69e4','1625784638','no'),(129,'_transient_dash_v2_16e5162baedbebe7a1904fee5fde69e4','<div class=\"rss-widget\"><p><strong>RSS 오류:</strong> XML or PCRE extensions not loaded!</p></div><div class=\"rss-widget\"><p><strong>RSS 오류:</strong> XML or PCRE extensions not loaded!</p></div>','no'),(130,'can_compress_scripts','1','no'),(131,'_site_transient_timeout_community-events-13c9bf70b1b313549afae20d447da890','1625784639','no'),(132,'_site_transient_community-events-13c9bf70b1b313549afae20d447da890','a:4:{s:9:\"sandboxed\";b:0;s:5:\"error\";N;s:8:\"location\";a:1:{s:2:\"ip\";s:10:\"172.29.0.0\";}s:6:\"events\";a:2:{i:0;a:10:{s:4:\"type\";s:6:\"meetup\";s:5:\"title\";s:60:\"Watch Party + Discussion Group: Intro to the Block Directory\";s:3:\"url\";s:68:\"https://www.meetup.com/learn-wordpress-discussions/events/279289971/\";s:6:\"meetup\";s:27:\"Learn WordPress Discussions\";s:10:\"meetup_url\";s:51:\"https://www.meetup.com/learn-wordpress-discussions/\";s:4:\"date\";s:19:\"2021-07-08 02:00:00\";s:8:\"end_date\";s:19:\"2021-07-08 03:00:00\";s:20:\"start_unix_timestamp\";i:1625734800;s:18:\"end_unix_timestamp\";i:1625738400;s:8:\"location\";a:4:{s:8:\"location\";s:6:\"Online\";s:7:\"country\";s:2:\"US\";s:8:\"latitude\";d:37.779998779297;s:9:\"longitude\";d:-122.41999816895;}}i:1;a:10:{s:4:\"type\";s:8:\"wordcamp\";s:5:\"title\";s:34:\"WordCamp Santa Clarita Online 2021\";s:3:\"url\";s:39:\"https://santaclarita.wordcamp.org/2021/\";s:6:\"meetup\";N;s:10:\"meetup_url\";N;s:4:\"date\";s:19:\"2021-07-17 00:00:00\";s:8:\"end_date\";s:19:\"2021-07-18 00:00:00\";s:20:\"start_unix_timestamp\";i:1626505200;s:18:\"end_unix_timestamp\";i:1626591600;s:8:\"location\";a:4:{s:8:\"location\";s:6:\"Online\";s:7:\"country\";s:2:\"US\";s:8:\"latitude\";d:34.3677169;s:9:\"longitude\";d:-118.4747173;}}}}','no'),(135,'theme_mods_twentytwentyone','a:4:{s:18:\"custom_css_post_id\";i:-1;s:18:\"nav_menu_locations\";a:2:{s:7:\"primary\";i:2;s:6:\"footer\";i:3;}s:16:\"background_color\";s:6:\"f9e8a4\";s:29:\"respect_user_color_preference\";b:1;}','yes'),(136,'nav_menu_options','a:1:{s:8:\"auto_add\";a:0:{}}','yes'),(137,'category_children','a:0:{}','yes'),(138,'_site_transient_update_themes','O:8:\"stdClass\":5:{s:12:\"last_checked\";i:1625741561;s:7:\"checked\";a:1:{s:15:\"twentytwentyone\";s:3:\"1.3\";}s:8:\"response\";a:0:{}s:9:\"no_update\";a:1:{s:15:\"twentytwentyone\";a:6:{s:5:\"theme\";s:15:\"twentytwentyone\";s:11:\"new_version\";s:3:\"1.3\";s:3:\"url\";s:45:\"https://wordpress.org/themes/twentytwentyone/\";s:7:\"package\";s:61:\"https://downloads.wordpress.org/theme/twentytwentyone.1.3.zip\";s:8:\"requires\";s:3:\"5.3\";s:12:\"requires_php\";s:3:\"5.6\";}}s:12:\"translations\";a:1:{i:0;a:7:{s:4:\"type\";s:5:\"theme\";s:4:\"slug\";s:15:\"twentytwentyone\";s:8:\"language\";s:5:\"ko_KR\";s:7:\"version\";s:3:\"1.0\";s:7:\"updated\";s:19:\"2021-04-20 03:44:35\";s:7:\"package\";s:79:\"https://downloads.wordpress.org/translation/theme/twentytwentyone/1.0/ko_KR.zip\";s:10:\"autoupdate\";b:1;}}}','no');
+INSERT INTO `wp_options` (`option_id`, `option_name`, `option_value`, `autoload`) VALUES
+(1, 'siteurl', 'https://localhost/wordpress', 'yes'),
+(2, 'home', 'https://localhost/wordpress', 'yes'),
+(3, 'blogname', 'site_title', 'yes'),
+(4, 'blogdescription', '다른 워드프레스 사이트', 'yes'),
+(5, 'users_can_register', '0', 'yes'),
+(6, 'admin_email', 'ksubin195@gmail.com', 'yes'),
+(7, 'start_of_week', '0', 'yes'),
+(8, 'use_balanceTags', '0', 'yes'),
+(9, 'use_smilies', '1', 'yes'),
+(10, 'require_name_email', '1', 'yes'),
+(11, 'comments_notify', '1', 'yes'),
+(12, 'posts_per_rss', '10', 'yes'),
+(13, 'rss_use_excerpt', '0', 'yes'),
+(14, 'mailserver_url', 'mail.example.com', 'yes'),
+(15, 'mailserver_login', 'login@example.com', 'yes'),
+(16, 'mailserver_pass', 'password', 'yes'),
+(17, 'mailserver_port', '110', 'yes'),
+(18, 'default_category', '1', 'yes'),
+(19, 'default_comment_status', 'open', 'yes'),
+(20, 'default_ping_status', 'open', 'yes'),
+(21, 'default_pingback_flag', '0', 'yes'),
+(22, 'posts_per_page', '10', 'yes'),
+(23, 'date_format', 'Y년 m월 d일', 'yes'),
+(24, 'time_format', 'g:i a', 'yes'),
+(25, 'links_updated_date_format', 'Y년 F j일 g:i a', 'yes'),
+(26, 'comment_moderation', '0', 'yes'),
+(27, 'moderation_notify', '1', 'yes'),
+(28, 'permalink_structure', '', 'yes'),
+(29, 'rewrite_rules', '', 'yes'),
+(30, 'hack_file', '0', 'yes'),
+(31, 'blog_charset', 'UTF-8', 'yes'),
+(32, 'moderation_keys', '', 'no'),
+(33, 'active_plugins', 'a:0:{}', 'yes'),
+(34, 'category_base', '', 'yes'),
+(35, 'ping_sites', 'http://rpc.pingomatic.com/', 'yes'),
+(36, 'comment_max_links', '2', 'yes'),
+(37, 'gmt_offset', '0', 'yes'),
+(38, 'default_email_category', '1', 'yes'),
+(39, 'recently_edited', '', 'no'),
+(40, 'template', 'twentytwentyone', 'yes'),
+(41, 'stylesheet', 'twentytwentyone', 'yes'),
+(42, 'comment_registration', '0', 'yes'),
+(43, 'html_type', 'text/html', 'yes'),
+(44, 'use_trackback', '0', 'yes'),
+(45, 'default_role', 'subscriber', 'yes'),
+(46, 'db_version', '49752', 'yes'),
+(47, 'uploads_use_yearmonth_folders', '1', 'yes'),
+(48, 'upload_path', '', 'yes'),
+(49, 'blog_public', '0', 'yes'),
+(50, 'default_link_category', '2', 'yes'),
+(51, 'show_on_front', 'posts', 'yes'),
+(52, 'tag_base', '', 'yes'),
+(53, 'show_avatars', '1', 'yes'),
+(54, 'avatar_rating', 'G', 'yes'),
+(55, 'upload_url_path', '', 'yes'),
+(56, 'thumbnail_size_w', '150', 'yes'),
+(57, 'thumbnail_size_h', '150', 'yes'),
+(58, 'thumbnail_crop', '1', 'yes'),
+(59, 'medium_size_w', '300', 'yes'),
+(60, 'medium_size_h', '300', 'yes'),
+(61, 'avatar_default', 'mystery', 'yes'),
+(62, 'large_size_w', '1024', 'yes'),
+(63, 'large_size_h', '1024', 'yes'),
+(64, 'image_default_link_type', 'none', 'yes'),
+(65, 'image_default_size', '', 'yes'),
+(66, 'image_default_align', '', 'yes'),
+(67, 'close_comments_for_old_posts', '0', 'yes'),
+(68, 'close_comments_days_old', '14', 'yes'),
+(69, 'thread_comments', '1', 'yes'),
+(70, 'thread_comments_depth', '5', 'yes'),
+(71, 'page_comments', '0', 'yes'),
+(72, 'comments_per_page', '50', 'yes'),
+(73, 'default_comments_page', 'newest', 'yes'),
+(74, 'comment_order', 'asc', 'yes'),
+(75, 'sticky_posts', 'a:0:{}', 'yes'),
+(76, 'widget_categories', 'a:0:{}', 'yes'),
+(77, 'widget_text', 'a:0:{}', 'yes'),
+(78, 'widget_rss', 'a:0:{}', 'yes'),
+(79, 'uninstall_plugins', 'a:0:{}', 'no'),
+(80, 'timezone_string', 'Asia/Seoul', 'yes'),
+(81, 'page_for_posts', '0', 'yes'),
+(82, 'page_on_front', '0', 'yes'),
+(83, 'default_post_format', '0', 'yes'),
+(84, 'link_manager_enabled', '0', 'yes'),
+(85, 'finished_splitting_shared_terms', '1', 'yes'),
+(86, 'site_icon', '0', 'yes'),
+(87, 'medium_large_size_w', '768', 'yes'),
+(88, 'medium_large_size_h', '0', 'yes'),
+(89, 'wp_page_for_privacy_policy', '3', 'yes'),
+(90, 'show_comments_cookies_opt_in', '1', 'yes'),
+(91, 'admin_email_lifespan', '1648196483', 'yes'),
+(92, 'disallowed_keys', '', 'no'),
+(93, 'comment_previously_approved', '1', 'yes'),
+(94, 'auto_plugin_theme_update_emails', 'a:0:{}', 'no'),
+(95, 'auto_update_core_dev', 'enabled', 'yes'),
+(96, 'auto_update_core_minor', 'enabled', 'yes'),
+(97, 'auto_update_core_major', 'enabled', 'yes'),
+(98, 'wp_force_deactivated_plugins', 'a:0:{}', 'yes'),
+(99, 'initial_db_version', '49752', 'yes'),
+(100, 'wp_user_roles', 'a:5:{s:13:\"administrator\";a:2:{s:4:\"name\";s:13:\"Administrator\";s:12:\"capabilities\";a:61:{s:13:\"switch_themes\";b:1;s:11:\"edit_themes\";b:1;s:16:\"activate_plugins\";b:1;s:12:\"edit_plugins\";b:1;s:10:\"edit_users\";b:1;s:10:\"edit_files\";b:1;s:14:\"manage_options\";b:1;s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:6:\"import\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:8:\"level_10\";b:1;s:7:\"level_9\";b:1;s:7:\"level_8\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;s:12:\"delete_users\";b:1;s:12:\"create_users\";b:1;s:17:\"unfiltered_upload\";b:1;s:14:\"edit_dashboard\";b:1;s:14:\"update_plugins\";b:1;s:14:\"delete_plugins\";b:1;s:15:\"install_plugins\";b:1;s:13:\"update_themes\";b:1;s:14:\"install_themes\";b:1;s:11:\"update_core\";b:1;s:10:\"list_users\";b:1;s:12:\"remove_users\";b:1;s:13:\"promote_users\";b:1;s:18:\"edit_theme_options\";b:1;s:13:\"delete_themes\";b:1;s:6:\"export\";b:1;}}s:6:\"editor\";a:2:{s:4:\"name\";s:6:\"Editor\";s:12:\"capabilities\";a:34:{s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;}}s:6:\"author\";a:2:{s:4:\"name\";s:6:\"Author\";s:12:\"capabilities\";a:10:{s:12:\"upload_files\";b:1;s:10:\"edit_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;s:22:\"delete_published_posts\";b:1;}}s:11:\"contributor\";a:2:{s:4:\"name\";s:11:\"Contributor\";s:12:\"capabilities\";a:5:{s:10:\"edit_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;}}s:10:\"subscriber\";a:2:{s:4:\"name\";s:10:\"Subscriber\";s:12:\"capabilities\";a:2:{s:4:\"read\";b:1;s:7:\"level_0\";b:1;}}}', 'yes'),
+(101, 'fresh_site', '1', 'yes'),
+(102, 'WPLANG', 'ko_KR', 'yes'),
+(103, 'widget_block', 'a:6:{i:2;a:1:{s:7:\"content\";s:19:\"<!-- wp:search /-->\";}i:3;a:1:{s:7:\"content\";s:152:\"<!-- wp:group --><div class=\"wp-block-group\"><!-- wp:heading --><h2>최신 글</h2><!-- /wp:heading --><!-- wp:latest-posts /--></div><!-- /wp:group -->\";}i:4;a:1:{s:7:\"content\";s:225:\"<!-- wp:group --><div class=\"wp-block-group\"><!-- wp:heading --><h2>최신 댓글</h2><!-- /wp:heading --><!-- wp:latest-comments {\"displayAvatar\":false,\"displayDate\":false,\"displayExcerpt\":false} /--></div><!-- /wp:group -->\";}i:5;a:1:{s:7:\"content\";s:147:\"<!-- wp:group --><div class=\"wp-block-group\"><!-- wp:heading --><h2>보관함</h2><!-- /wp:heading --><!-- wp:archives /--></div><!-- /wp:group -->\";}i:6;a:1:{s:7:\"content\";s:152:\"<!-- wp:group --><div class=\"wp-block-group\"><!-- wp:heading --><h2>카테고리</h2><!-- /wp:heading --><!-- wp:categories /--></div><!-- /wp:group -->\";}s:12:\"_multiwidget\";i:1;}', 'yes'),
+(104, 'sidebars_widgets', 'a:4:{s:19:\"wp_inactive_widgets\";a:0:{}s:9:\"sidebar-1\";a:3:{i:0;s:7:\"block-2\";i:1;s:7:\"block-3\";i:2;s:7:\"block-4\";}s:9:\"sidebar-2\";a:2:{i:0;s:7:\"block-5\";i:1;s:7:\"block-6\";}s:13:\"array_version\";i:3;}', 'yes'),
+(105, 'cron', 'a:5:{i:1632644614;a:1:{s:28:\"wp_update_comment_type_batch\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:2:{s:8:\"schedule\";b:0;s:4:\"args\";a:0:{}}}}i:1632648084;a:1:{s:34:\"wp_privacy_delete_old_export_files\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:6:\"hourly\";s:4:\"args\";a:0:{}s:8:\"interval\";i:3600;}}}i:1632687684;a:4:{s:18:\"wp_https_detection\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}s:16:\"wp_version_check\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}s:17:\"wp_update_plugins\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}s:16:\"wp_update_themes\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}}i:1632730884;a:2:{s:30:\"wp_site_health_scheduled_check\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:6:\"weekly\";s:4:\"args\";a:0:{}s:8:\"interval\";i:604800;}}s:32:\"recovery_mode_clean_expired_keys\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:5:\"daily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:86400;}}}s:7:\"version\";i:2;}', 'yes'),
+(106, 'widget_pages', 'a:1:{s:12:\"_multiwidget\";i:1;}', 'yes'),
+(107, 'widget_calendar', 'a:1:{s:12:\"_multiwidget\";i:1;}', 'yes'),
+(108, 'widget_archives', 'a:1:{s:12:\"_multiwidget\";i:1;}', 'yes'),
+(109, 'widget_media_audio', 'a:1:{s:12:\"_multiwidget\";i:1;}', 'yes'),
+(110, 'widget_media_image', 'a:1:{s:12:\"_multiwidget\";i:1;}', 'yes'),
+(111, 'widget_media_gallery', 'a:1:{s:12:\"_multiwidget\";i:1;}', 'yes'),
+(112, 'widget_media_video', 'a:1:{s:12:\"_multiwidget\";i:1;}', 'yes'),
+(113, 'widget_meta', 'a:1:{s:12:\"_multiwidget\";i:1;}', 'yes'),
+(114, 'widget_search', 'a:1:{s:12:\"_multiwidget\";i:1;}', 'yes'),
+(115, 'nonce_key', '7|^2pk^-iOn;50l&;/{:jNS#d^MsV*|tS>Rk^#Sl69q/z_@EGJJPt93_0Vi|ARcT', 'no'),
+(116, 'nonce_salt', 'ORy=E6)kx6^PbMjM;[I]m}l}P@g7SS$D^J2;Dz.lCqMC`-)SR:5u/Y24n{k-/~?w', 'no'),
+(117, 'widget_tag_cloud', 'a:1:{s:12:\"_multiwidget\";i:1;}', 'yes'),
+(118, 'widget_nav_menu', 'a:1:{s:12:\"_multiwidget\";i:1;}', 'yes'),
+(119, 'widget_custom_html', 'a:1:{s:12:\"_multiwidget\";i:1;}', 'yes'),
+(121, 'recovery_keys', 'a:0:{}', 'yes'),
+(122, 'theme_mods_twentytwentyone', 'a:1:{s:18:\"custom_css_post_id\";i:-1;}', 'yes'),
+(123, 'https_detection_errors', 'a:1:{s:23:\"ssl_verification_failed\";a:1:{i:0;s:18:\"SSL 인증 실패.\";}}', 'yes'),
+(127, '_site_transient_timeout_theme_roots', '1632646286', 'no'),
+(128, '_site_transient_theme_roots', 'a:3:{s:14:\"twentynineteen\";s:7:\"/themes\";s:12:\"twentytwenty\";s:7:\"/themes\";s:15:\"twentytwentyone\";s:7:\"/themes\";}', 'no'),
+(130, 'secure_auth_key', '#Prq[Wd:D$3r#E,ocP(OC[gy;xFZ9g:  BKk5aWVpSf]?6FayzXcOic)mJ-$d3xF', 'no'),
+(131, 'secure_auth_salt', 'B9O^b<(P1 Tr3VXeB8vUtJnt[DW-QBvug=.iu)X-wk`<$,#+MQPN38uotlM(iT7&', 'no'),
+(132, 'logged_in_key', '670Ft}gmxUl+>?zT}B=%d@$3}H=:E,xJ{A^nSZH<6e75]hhf4u>;EydJ;u(1{|D-', 'no'),
+(133, 'logged_in_salt', '<i^w8r9(tV@)lw1V it2zw=o^FMWD&7ocP}!#x%n,%2s+C}fnic<yq8ruqz|[Kf{', 'no'),
+(134, '_site_transient_timeout_browser_c13b7200c84cded4537ab2a9bd2a7ad6', '1633249290', 'no'),
+(135, '_site_transient_browser_c13b7200c84cded4537ab2a9bd2a7ad6', 'a:10:{s:4:\"name\";s:6:\"Chrome\";s:7:\"version\";s:12:\"93.0.4577.82\";s:8:\"platform\";s:9:\"Macintosh\";s:10:\"update_url\";s:29:\"https://www.google.com/chrome\";s:7:\"img_src\";s:43:\"http://s.w.org/images/browsers/chrome.png?1\";s:11:\"img_src_ssl\";s:44:\"https://s.w.org/images/browsers/chrome.png?1\";s:15:\"current_version\";s:2:\"18\";s:7:\"upgrade\";b:0;s:8:\"insecure\";b:0;s:6:\"mobile\";b:0;}', 'no'),
+(136, '_site_transient_timeout_php_check_009c6eb5b40f6e5b9ba52ef6dc06f73a', '1633249291', 'no'),
+(137, '_site_transient_php_check_009c6eb5b40f6e5b9ba52ef6dc06f73a', 'a:5:{s:19:\"recommended_version\";s:3:\"7.4\";s:15:\"minimum_version\";s:6:\"5.6.20\";s:12:\"is_supported\";b:0;s:9:\"is_secure\";b:1;s:13:\"is_acceptable\";b:1;}', 'no'),
+(138, '_transient_timeout_dash_v2_16e5162baedbebe7a1904fee5fde69e4', '1632687691', 'no'),
+(139, '_transient_dash_v2_16e5162baedbebe7a1904fee5fde69e4', '<div class=\"rss-widget\"><p><strong>RSS 오류:</strong> XML or PCRE extensions not loaded!</p></div><div class=\"rss-widget\"><p><strong>RSS 오류:</strong> XML or PCRE extensions not loaded!</p></div>', 'no'),
+(140, 'can_compress_scripts', '1', 'no'),
+(141, '_site_transient_timeout_community-events-e2f2ed925cc0dc7eddd67ec58c0404fa', '1632687692', 'no'),
+(142, '_site_transient_community-events-e2f2ed925cc0dc7eddd67ec58c0404fa', 'a:4:{s:9:\"sandboxed\";b:0;s:5:\"error\";N;s:8:\"location\";a:1:{s:2:\"ip\";s:10:\"172.17.0.0\";}s:6:\"events\";a:2:{i:0;a:10:{s:4:\"type\";s:6:\"meetup\";s:5:\"title\";s:76:\"Polyglots Training Discussion: Building a Translation Style Guide + Glossary\";s:3:\"url\";s:68:\"https://www.meetup.com/learn-wordpress-discussions/events/280816059/\";s:6:\"meetup\";s:27:\"Learn WordPress Discussions\";s:10:\"meetup_url\";s:51:\"https://www.meetup.com/learn-wordpress-discussions/\";s:4:\"date\";s:19:\"2021-09-28 08:00:00\";s:8:\"end_date\";s:19:\"2021-09-28 09:00:00\";s:20:\"start_unix_timestamp\";i:1632841200;s:18:\"end_unix_timestamp\";i:1632844800;s:8:\"location\";a:4:{s:8:\"location\";s:6:\"Online\";s:7:\"country\";s:2:\"US\";s:8:\"latitude\";d:37.779998779297;s:9:\"longitude\";d:-122.41999816895;}}i:1;a:10:{s:4:\"type\";s:8:\"wordcamp\";s:5:\"title\";s:23:\"WordCamp Galicia, Spain\";s:3:\"url\";s:34:\"https://galicia.wordcamp.org/2021/\";s:6:\"meetup\";N;s:10:\"meetup_url\";N;s:4:\"date\";s:19:\"2021-09-30 17:00:00\";s:8:\"end_date\";s:19:\"2021-10-02 00:00:00\";s:20:\"start_unix_timestamp\";i:1633014000;s:18:\"end_unix_timestamp\";i:1633125600;s:8:\"location\";a:4:{s:8:\"location\";s:6:\"Online\";s:7:\"country\";s:2:\"ES\";s:8:\"latitude\";d:42.5750554;s:9:\"longitude\";d:-8.1338558;}}}}', 'no'),
+(143, '_site_transient_update_core', 'O:8:\"stdClass\":4:{s:7:\"updates\";a:1:{i:0;O:8:\"stdClass\":10:{s:8:\"response\";s:6:\"latest\";s:8:\"download\";s:65:\"https://downloads.wordpress.org/release/ko_KR/wordpress-5.8.1.zip\";s:6:\"locale\";s:5:\"ko_KR\";s:8:\"packages\";O:8:\"stdClass\":5:{s:4:\"full\";s:65:\"https://downloads.wordpress.org/release/ko_KR/wordpress-5.8.1.zip\";s:10:\"no_content\";s:0:\"\";s:11:\"new_bundled\";s:0:\"\";s:7:\"partial\";s:0:\"\";s:8:\"rollback\";s:0:\"\";}s:7:\"current\";s:5:\"5.8.1\";s:7:\"version\";s:5:\"5.8.1\";s:11:\"php_version\";s:6:\"5.6.20\";s:13:\"mysql_version\";s:3:\"5.0\";s:11:\"new_bundled\";s:3:\"5.6\";s:15:\"partial_version\";s:0:\"\";}}s:12:\"last_checked\";i:1632644495;s:15:\"version_checked\";s:5:\"5.8.1\";s:12:\"translations\";a:0:{}}', 'no'),
+(144, '_site_transient_update_themes', 'O:8:\"stdClass\":5:{s:12:\"last_checked\";i:1632644496;s:7:\"checked\";a:3:{s:14:\"twentynineteen\";s:3:\"2.1\";s:12:\"twentytwenty\";s:3:\"1.8\";s:15:\"twentytwentyone\";s:3:\"1.4\";}s:8:\"response\";a:0:{}s:9:\"no_update\";a:3:{s:14:\"twentynineteen\";a:6:{s:5:\"theme\";s:14:\"twentynineteen\";s:11:\"new_version\";s:3:\"2.1\";s:3:\"url\";s:44:\"https://wordpress.org/themes/twentynineteen/\";s:7:\"package\";s:60:\"https://downloads.wordpress.org/theme/twentynineteen.2.1.zip\";s:8:\"requires\";s:5:\"4.9.6\";s:12:\"requires_php\";s:5:\"5.2.4\";}s:12:\"twentytwenty\";a:6:{s:5:\"theme\";s:12:\"twentytwenty\";s:11:\"new_version\";s:3:\"1.8\";s:3:\"url\";s:42:\"https://wordpress.org/themes/twentytwenty/\";s:7:\"package\";s:58:\"https://downloads.wordpress.org/theme/twentytwenty.1.8.zip\";s:8:\"requires\";s:3:\"4.7\";s:12:\"requires_php\";s:5:\"5.2.4\";}s:15:\"twentytwentyone\";a:6:{s:5:\"theme\";s:15:\"twentytwentyone\";s:11:\"new_version\";s:3:\"1.4\";s:3:\"url\";s:45:\"https://wordpress.org/themes/twentytwentyone/\";s:7:\"package\";s:61:\"https://downloads.wordpress.org/theme/twentytwentyone.1.4.zip\";s:8:\"requires\";s:3:\"5.3\";s:12:\"requires_php\";s:3:\"5.6\";}}s:12:\"translations\";a:0:{}}', 'no'),
+(145, '_site_transient_update_plugins', 'O:8:\"stdClass\":5:{s:12:\"last_checked\";i:1632644497;s:8:\"response\";a:0:{}s:12:\"translations\";a:0:{}s:9:\"no_update\";a:2:{s:19:\"akismet/akismet.php\";O:8:\"stdClass\":10:{s:2:\"id\";s:21:\"w.org/plugins/akismet\";s:4:\"slug\";s:7:\"akismet\";s:6:\"plugin\";s:19:\"akismet/akismet.php\";s:11:\"new_version\";s:6:\"4.1.12\";s:3:\"url\";s:38:\"https://wordpress.org/plugins/akismet/\";s:7:\"package\";s:57:\"https://downloads.wordpress.org/plugin/akismet.4.1.12.zip\";s:5:\"icons\";a:2:{s:2:\"2x\";s:59:\"https://ps.w.org/akismet/assets/icon-256x256.png?rev=969272\";s:2:\"1x\";s:59:\"https://ps.w.org/akismet/assets/icon-128x128.png?rev=969272\";}s:7:\"banners\";a:1:{s:2:\"1x\";s:61:\"https://ps.w.org/akismet/assets/banner-772x250.jpg?rev=479904\";}s:11:\"banners_rtl\";a:0:{}s:8:\"requires\";s:3:\"4.6\";}s:9:\"hello.php\";O:8:\"stdClass\":10:{s:2:\"id\";s:25:\"w.org/plugins/hello-dolly\";s:4:\"slug\";s:11:\"hello-dolly\";s:6:\"plugin\";s:9:\"hello.php\";s:11:\"new_version\";s:5:\"1.7.2\";s:3:\"url\";s:42:\"https://wordpress.org/plugins/hello-dolly/\";s:7:\"package\";s:60:\"https://downloads.wordpress.org/plugin/hello-dolly.1.7.2.zip\";s:5:\"icons\";a:2:{s:2:\"2x\";s:64:\"https://ps.w.org/hello-dolly/assets/icon-256x256.jpg?rev=2052855\";s:2:\"1x\";s:64:\"https://ps.w.org/hello-dolly/assets/icon-128x128.jpg?rev=2052855\";}s:7:\"banners\";a:1:{s:2:\"1x\";s:66:\"https://ps.w.org/hello-dolly/assets/banner-772x250.jpg?rev=2052855\";}s:11:\"banners_rtl\";a:0:{}s:8:\"requires\";s:3:\"4.6\";}}s:7:\"checked\";a:2:{s:19:\"akismet/akismet.php\";s:6:\"4.1.12\";s:9:\"hello.php\";s:5:\"1.7.2\";}}', 'no');
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `wp_postmeta`
+--
 
 CREATE TABLE `wp_postmeta` (
-  `meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `post_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `meta_id` bigint(20) UNSIGNED NOT NULL,
+  `post_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `meta_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_value` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`meta_id`),
-  KEY `post_id` (`post_id`),
-  KEY `meta_key` (`meta_key`(191))
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `meta_value` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `wp_postmeta`
+-- 테이블의 덤프 데이터 `wp_postmeta`
 --
 
-LOCK TABLES `wp_postmeta` WRITE;
-/*!40000 ALTER TABLE `wp_postmeta` DISABLE KEYS */;
-INSERT INTO `wp_postmeta` VALUES (1,2,'_wp_page_template','default'),(2,3,'_wp_page_template','default'),(3,5,'_customize_draft_post_name','create-your-website-with-blocks'),(4,5,'_customize_changeset_uuid','79d04bb2-dfb3-4da6-8386-0b439e5ff8ab'),(5,6,'_customize_draft_post_name','%ec%86%8c%ea%b0%9c'),(6,6,'_customize_changeset_uuid','79d04bb2-dfb3-4da6-8386-0b439e5ff8ab'),(7,7,'_customize_draft_post_name','%eb%ac%b8%ec%9d%98'),(8,7,'_customize_changeset_uuid','79d04bb2-dfb3-4da6-8386-0b439e5ff8ab'),(9,8,'_customize_draft_post_name','%eb%b8%94%eb%a1%9c%ea%b7%b8'),(10,8,'_customize_changeset_uuid','79d04bb2-dfb3-4da6-8386-0b439e5ff8ab'),(11,10,'_customize_draft_post_name','create-your-website-with-blocks'),(12,10,'_customize_changeset_uuid','d6ab6f13-b813-4e57-ba7b-b197af183f37'),(13,11,'_customize_draft_post_name','%ec%86%8c%ea%b0%9c'),(14,11,'_customize_changeset_uuid','d6ab6f13-b813-4e57-ba7b-b197af183f37'),(15,12,'_customize_draft_post_name','%eb%ac%b8%ec%9d%98'),(16,12,'_customize_changeset_uuid','d6ab6f13-b813-4e57-ba7b-b197af183f37'),(17,13,'_customize_draft_post_name','%eb%b8%94%eb%a1%9c%ea%b7%b8'),(18,13,'_customize_changeset_uuid','d6ab6f13-b813-4e57-ba7b-b197af183f37'),(20,15,'_customize_changeset_uuid','4585d86f-f52c-468d-b8d0-a96be99ffbe9'),(22,16,'_customize_changeset_uuid','4585d86f-f52c-468d-b8d0-a96be99ffbe9'),(24,17,'_customize_changeset_uuid','4585d86f-f52c-468d-b8d0-a96be99ffbe9'),(26,18,'_customize_changeset_uuid','4585d86f-f52c-468d-b8d0-a96be99ffbe9'),(27,24,'_menu_item_type','custom'),(28,24,'_menu_item_menu_item_parent','0'),(29,24,'_menu_item_object_id','24'),(30,24,'_menu_item_object','custom'),(31,24,'_menu_item_target',''),(32,24,'_menu_item_classes','a:1:{i:0;s:0:\"\";}'),(33,24,'_menu_item_xfn',''),(34,24,'_menu_item_url','https://skim.42.fr/'),(35,25,'_menu_item_type','post_type'),(36,25,'_menu_item_menu_item_parent','0'),(37,25,'_menu_item_object_id','16'),(38,25,'_menu_item_object','page'),(39,25,'_menu_item_target',''),(40,25,'_menu_item_classes','a:1:{i:0;s:0:\"\";}'),(41,25,'_menu_item_xfn',''),(42,25,'_menu_item_url',''),(43,26,'_menu_item_type','post_type'),(44,26,'_menu_item_menu_item_parent','0'),(45,26,'_menu_item_object_id','18'),(46,26,'_menu_item_object','page'),(47,26,'_menu_item_target',''),(48,26,'_menu_item_classes','a:1:{i:0;s:0:\"\";}'),(49,26,'_menu_item_xfn',''),(50,26,'_menu_item_url',''),(51,27,'_menu_item_type','post_type'),(52,27,'_menu_item_menu_item_parent','0'),(53,27,'_menu_item_object_id','17'),(54,27,'_menu_item_object','page'),(55,27,'_menu_item_target',''),(56,27,'_menu_item_classes','a:1:{i:0;s:0:\"\";}'),(57,27,'_menu_item_xfn',''),(58,27,'_menu_item_url',''),(59,28,'_menu_item_type','custom'),(60,28,'_menu_item_menu_item_parent','0'),(61,28,'_menu_item_object_id','28'),(62,28,'_menu_item_object','custom'),(63,28,'_menu_item_target',''),(64,28,'_menu_item_classes','a:1:{i:0;s:0:\"\";}'),(65,28,'_menu_item_xfn',''),(66,28,'_menu_item_url','https://www.facebook.com/wordpress'),(67,29,'_menu_item_type','custom'),(68,29,'_menu_item_menu_item_parent','0'),(69,29,'_menu_item_object_id','29'),(70,29,'_menu_item_object','custom'),(71,29,'_menu_item_target',''),(72,29,'_menu_item_classes','a:1:{i:0;s:0:\"\";}'),(73,29,'_menu_item_xfn',''),(74,29,'_menu_item_url','https://twitter.com/wordpress'),(75,30,'_menu_item_type','custom'),(76,30,'_menu_item_menu_item_parent','0'),(77,30,'_menu_item_object_id','30'),(78,30,'_menu_item_object','custom'),(79,30,'_menu_item_target',''),(80,30,'_menu_item_classes','a:1:{i:0;s:0:\"\";}'),(81,30,'_menu_item_xfn',''),(82,30,'_menu_item_url','https://www.instagram.com/explore/tags/wordcamp/'),(83,31,'_menu_item_type','custom'),(84,31,'_menu_item_menu_item_parent','0'),(85,31,'_menu_item_object_id','31'),(86,31,'_menu_item_object','custom'),(87,31,'_menu_item_target',''),(88,31,'_menu_item_classes','a:1:{i:0;s:0:\"\";}'),(89,31,'_menu_item_xfn',''),(90,31,'_menu_item_url','mailto:wordpress@example.com'),(91,19,'_wp_trash_meta_status','publish'),(92,19,'_wp_trash_meta_time','1625741528'),(93,14,'_customize_restore_dismissed','1'),(94,9,'_customize_restore_dismissed','1');
-/*!40000 ALTER TABLE `wp_postmeta` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `wp_postmeta` (`meta_id`, `post_id`, `meta_key`, `meta_value`) VALUES
+(1, 2, '_wp_page_template', 'default'),
+(2, 3, '_wp_page_template', 'default');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `wp_posts`
+-- 테이블 구조 `wp_posts`
 --
 
-DROP TABLE IF EXISTS `wp_posts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wp_posts` (
-  `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `post_author` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `ID` bigint(20) UNSIGNED NOT NULL,
+  `post_author` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `post_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `post_date_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `post_content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -112,178 +291,145 @@ CREATE TABLE `wp_posts` (
   `post_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `post_modified_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `post_content_filtered` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `post_parent` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `post_parent` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `guid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `menu_order` int(11) NOT NULL DEFAULT 0,
   `post_type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'post',
   `post_mime_type` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `comment_count` bigint(20) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`ID`),
-  KEY `post_name` (`post_name`(191)),
-  KEY `type_status_date` (`post_type`,`post_status`,`post_date`,`ID`),
-  KEY `post_parent` (`post_parent`),
-  KEY `post_author` (`post_author`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `wp_posts`
---
-
-LOCK TABLES `wp_posts` WRITE;
-/*!40000 ALTER TABLE `wp_posts` DISABLE KEYS */;
-INSERT INTO `wp_posts` VALUES (1,1,'2021-07-08 19:50:16','2021-07-08 10:50:16','<!-- wp:paragraph -->\n<p>워드프레스에 오신 것을 환영합니다. 이것은 첫 글입니다. 바로 편집하거나 삭제한 다음 쓰기 시작하세요!</p>\n<!-- /wp:paragraph -->','안녕하세요!','','publish','open','open','','%ec%a0%84-%ec%84%b8%ea%b3%84-%ec%97%ac%eb%9f%ac%eb%b6%84-%ec%95%88%eb%85%95%ed%95%98%ec%84%b8%ec%9a%94','','','2021-07-08 19:50:16','2021-07-08 10:50:16','',0,'https://skim.42.fr/?p=1',0,'post','',1),(2,1,'2021-07-08 19:50:16','2021-07-08 10:50:16','<!-- wp:paragraph -->\n<p>예제 페이지입니다. 한 곳에서 유지하고 사이트 탐색(대부분의 경우 테마에서)에서 보일 것이기에 블로그 글과 다릅니다. 대부분의 사람은 잠재적 사이트 방문자에게 자신을 소개하는 소개 페이지로 시작합니다. 다음과 같이 말할 수 있습니다:</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:quote -->\n<blockquote class=\"wp-block-quote\"><p>안녕하세요! 낮에는 자전거 배달원, 밤에는 야심찬 배우이고, 여기는 나의 웹사이트입니다. 로스 앤젤레스에 살고 있고, 잭이라는 이름의 좋은 개를 기르고 있으며, 피나 콜라다를 좋아합니다. (그리고 빗 속을 걷는 것도요.)</p></blockquote>\n<!-- /wp:quote -->\n\n<!-- wp:paragraph -->\n<p>...또는 이런 것도요:</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:quote -->\n<blockquote class=\"wp-block-quote\"><p>XYZ 두히키 회사를 1971년에 세웠고, 공중에게 양질의 두히키를 제공하고 있습니다. 고담시에 위치하고 있는 XYZ는 2천 명 이상의 사람이 일하고 있고 고담 공동체에 대한 모든 종류의 멋진 일을 합니다.</p></blockquote>\n<!-- /wp:quote -->\n\n<!-- wp:paragraph -->\n<p>새 워드프레스 사용자라면, <a href=\"https://skim.42.fr/wp-admin/\">알림판</a>에 가서 이 페이지를 지우고 콘텐츠의 새 페이지를 만드세요. 즐거운 시간되세요!</p>\n<!-- /wp:paragraph -->','예제 페이지','','publish','closed','open','','예제-페이지','','','2021-07-08 19:50:16','2021-07-08 10:50:16','',0,'https://skim.42.fr/?page_id=2',0,'page','',0),(3,1,'2021-07-08 19:50:16','2021-07-08 10:50:16','<!-- wp:heading --><h2>우리는 누구인가요</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>웹사이트 주소는: https://skim.42.fr.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>댓글</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>방문자가 사이트에 댓글을 남길 때 댓글 양식에 있는 자료, 스팸 감지를 도울 수 있는 방문자의 IP 주소와 브라우저 사용자 에이전트 문자열 또한 수집합니다.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>이메일에서 생성된 익명화된 문자열(해시로 불리기도 함)이 그라바타 서비스에 제공될 수도 있습니다. 사용하고 있는지 확인하기 위해서 입니다. 그라바타 서비스의 개인정보 처리방침은 다음에서 볼 수 있습니다: https://automattic.com/privacy/. 댓글 승인 후 프로필 사진이 댓글 문맥에 공개로 보이게 됩니다.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>미디어</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>웹사이트에 이미지를 업로드하면, 임베드한 위치 자료(EXIF GPS)를 포함하여 이미지 업로드를 지해야 합니다. 웹사이트에 방문하는 사람이 웹사이트에 있는 이미지에서 위치 자료를 다운로드하고 추출할 수 있습니다.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>쿠키</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>사이트에 댓글을 남기면 이름, 이메일 주소와 웹사이트를 쿠키에 ,저장할 것인지 선택할 수 있습니다. 이들은 여러분의 편의를 위한 것이기에 또 다른 댓글을 남길 때 세부사항을 채울 필요가 없습니다. 이 쿠키는 최근 1년 동안 남습니다.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>로그인 페이지를 방문하면, 브라우저가 쿠키를 수용하는지 임시 쿠키를 만들 것입니다. 이 쿠키는 개인정보를 포함하지 않고 브라우저를 닫으면 취소합니다.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>로그인 할 때, 로그인 정보를 저장하고 화면 보이기 선택을 저장하는 쿠키도 설정합니다. 로그인 쿠키는 최근 2일, 그리고 화면 옵션은 최근 1년입니다. “기억하기”를 선택하면, 로그인은 2주 동안 유지합니다. 계정을 로그아웃하면, 로그인 쿠키를 제거할 것입니다..</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>게시물을 편집하거나 발행하면, 추가 쿠키를 브라우저에 저장할 것입니다. 이 쿠키는 개인정보를 포함하지 않고 단순히 방금 편집한 게시물의 글 ID만 지시합니다.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>다른 웹사이트에서 임베드한 콘텐츠</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>이 사이트의 글은 임베드된 콘텐츠(예: 비디오, 이미지, 기사 등)가 포함될 수도 있습니다. 다른 웹사이트로부터 임베드된 콘텐츠는 방문자가 해당 다른 웹사이트를 방문한 것과 동일하게 작동됩니다.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>이 웹사이트는 계정을 가지고 있고 그 웹사이트에 로그인했다면 자신에 대한 자료를 수집하고, 쿠키를 사용하며, 추가 타사 추적을 임베드하고, 임베드한 콘텐츠와 상호작용하는 추적을 포함하는 임베드 콘텐츠와 상호작용을 모니터할 수도 있습니다.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>누구와 함께 자료를 공유하나요</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>비밀번호 재설정을 요청하면, 재설정 이메일에 IP 주소가 포함됩니다.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>얼마나 오래 자료를 유지하나요</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>댓글을 남기면, 댓글과 그 메타자료를 무기한 유지합니다. 검토 대기열에 보유하는 대신에 자동으로 다음 댓글을 인식하고 승인합니다.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>웹사이트에 등록한 사용자에 대해, 사용자 프로필에 제공한 개인정보도 저장합니다. 모든 사용자는 언제든 자신의 개인정보를 보고, 편집하거나, 지울 수 있습니다(사용자명은 바꿀 수 없습니다). 웹사이트 관리자는 그 정보를 보고 편집할 수도 있습니다.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>자료에 대해 어떤 권리를 가지고 있나요</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>사이트에 계정을 가지고 있거나, 댓글을 남겼다면, 제공한 어떤 자료이든 보유하고 있는 개인정보의 파일 내보내기를 받도록 요청할 수 있습니다. 또한 보유하고 있는 개인정보를 지우는 것도 요청할 수 있습니다. 이는 관리자, 법, 또는 보안 목적으로 보관해야 하는 자료를 포함하지 않습니다.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>어디로 자료를 보내나요</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>자동 스팸 감지 서비스를 통해 방문자 댓글을 확인할 수 있습니다.</p><!-- /wp:paragraph -->','개인정보 처리방침','','draft','closed','open','','개인정보-보호-정책','','','2021-07-08 19:50:16','2021-07-08 10:50:16','',0,'https://skim.42.fr/?page_id=3',0,'page','',0),(4,1,'2021-07-08 19:50:38','0000-00-00 00:00:00','','자동 임시글','','auto-draft','open','open','','','','','2021-07-08 19:50:38','0000-00-00 00:00:00','',0,'https://skim.42.fr/?p=4',0,'post','',0),(5,1,'2021-07-08 19:51:12','0000-00-00 00:00:00','\n					<!-- wp:heading {\"align\":\"wide\",\"fontSize\":\"gigantic\",\"style\":{\"typography\":{\"lineHeight\":\"1.1\"}}} -->\n					<h2 class=\"alignwide has-text-align-wide has-gigantic-font-size\" style=\"line-height:1.1\">Create your website with blocks</h2>\n					<!-- /wp:heading -->\n\n					<!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:columns {\"verticalAlignment\":\"center\",\"align\":\"wide\",\"className\":\"is-style-twentytwentyone-columns-overlap\"} -->\n					<div class=\"wp-block-columns alignwide are-vertically-aligned-center is-style-twentytwentyone-columns-overlap\"><!-- wp:column {\"verticalAlignment\":\"center\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-center\"><!-- wp:image {\"align\":\"full\",\"sizeSlug\":\"large\"} -->\n					<figure class=\"wp-block-image alignfull size-large\"><img src=\"https://skim.42.fr/wp-content/themes/twentytwentyone/assets/images/roses-tremieres-hollyhocks-1884.jpg\" alt=\"&#8220;Roses Trémières&#8221; by Berthe Morisot\"/></figure>\n					<!-- /wp:image -->\n\n					<!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:image {\"align\":\"full\",\"sizeSlug\":\"large\",\"className\":\"is-style-twentytwentyone-image-frame\"} -->\n					<figure class=\"wp-block-image alignfull size-large is-style-twentytwentyone-image-frame\"><img src=\"https://skim.42.fr/wp-content/themes/twentytwentyone/assets/images/in-the-bois-de-boulogne.jpg\" alt=\"&#8220;In the Bois de Boulogne&#8221; by Berthe Morisot\"/></figure>\n					<!-- /wp:image --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column {\"verticalAlignment\":\"center\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-center\"><!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:image {\"sizeSlug\":\"large\",\"className\":\"alignfull size-full is-style-twentytwentyone-border\"} -->\n					<figure class=\"wp-block-image size-large alignfull size-full is-style-twentytwentyone-border\"><img src=\"https://skim.42.fr/wp-content/themes/twentytwentyone/assets/images/young-woman-in-mauve.jpg\" alt=\"&#8220;Young Woman in Mauve&#8221; by Berthe Morisot\"/></figure>\n					<!-- /wp:image --></div>\n					<!-- /wp:column --></div>\n					<!-- /wp:columns -->\n\n					<!-- wp:spacer {\"height\":50} -->\n					<div style=\"height:50px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:columns {\"verticalAlignment\":\"top\",\"align\":\"wide\"} -->\n					<div class=\"wp-block-columns alignwide are-vertically-aligned-top\"><!-- wp:column {\"verticalAlignment\":\"top\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-top\"><!-- wp:heading {\"level\":3} -->\n					<h3>Add block patterns</h3>\n					<!-- /wp:heading -->\n\n					<!-- wp:paragraph -->\n					<p>Block patterns are pre-designed groups of blocks. To add one, select the Add Block button [+] in the toolbar at the top of the editor. Switch to the Patterns tab underneath the search bar, and choose a pattern.</p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column {\"verticalAlignment\":\"top\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-top\"><!-- wp:heading {\"level\":3} -->\n					<h3>Frame your images</h3>\n					<!-- /wp:heading -->\n\n					<!-- wp:paragraph -->\n					<p>Twenty Twenty-One includes stylish borders for your content. With an Image block selected, open the &quot;Styles&quot; panel within the Editor sidebar. Select the &quot;Frame&quot; block style to activate it.</p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column {\"verticalAlignment\":\"top\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-top\"><!-- wp:heading {\"level\":3} -->\n					<h3>Overlap columns</h3>\n					<!-- /wp:heading -->\n\n					<!-- wp:paragraph -->\n					<p>Twenty Twenty-One also includes an overlap style for column blocks. With a Columns block selected, open the &quot;Styles&quot; panel within the Editor sidebar. Choose the &quot;Overlap&quot; block style to try it out.</p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column --></div>\n					<!-- /wp:columns -->\n\n					<!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:cover {\"overlayColor\":\"green\",\"contentPosition\":\"center center\",\"align\":\"wide\",\"className\":\"is-style-twentytwentyone-border\"} -->\n					<div class=\"wp-block-cover alignwide has-green-background-color has-background-dim is-style-twentytwentyone-border\"><div class=\"wp-block-cover__inner-container\"><!-- wp:spacer {\"height\":20} -->\n					<div style=\"height:20px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:paragraph {\"fontSize\":\"huge\"} -->\n					<p class=\"has-huge-font-size\">Need help?</p>\n					<!-- /wp:paragraph -->\n\n					<!-- wp:spacer {\"height\":75} -->\n					<div style=\"height:75px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:columns -->\n					<div class=\"wp-block-columns\"><!-- wp:column -->\n					<div class=\"wp-block-column\"><!-- wp:paragraph -->\n					<p><a href=\"https://wordpress.org/support/article/twenty-twenty-one/\">Read the Theme Documentation</a></p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column -->\n					<div class=\"wp-block-column\"><!-- wp:paragraph -->\n					<p><a href=\"https://wordpress.org/support/theme/twentytwentyone/\">Check out the Support Forums</a></p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column --></div>\n					<!-- /wp:columns -->\n\n					<!-- wp:spacer {\"height\":20} -->\n					<div style=\"height:20px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer --></div></div>\n					<!-- /wp:cover -->','Create your website with blocks','','auto-draft','closed','closed','','','','','2021-07-08 19:51:12','0000-00-00 00:00:00','',0,'https://skim.42.fr/?page_id=5',0,'page','',0),(6,1,'2021-07-08 19:51:12','0000-00-00 00:00:00','<!-- wp:paragraph -->\n<p>자신이나 자신의 작품을 이곳에 소개하고 싶어하는 예술가일 수도 있으며 임무가 있는 비지니스 일 수도 있습니다.</p>\n<!-- /wp:paragraph -->','소개','','auto-draft','closed','closed','','','','','2021-07-08 19:51:12','0000-00-00 00:00:00','',0,'https://skim.42.fr/?page_id=6',0,'page','',0),(7,1,'2021-07-08 19:51:12','0000-00-00 00:00:00','<!-- wp:paragraph -->\n<p>이것은 주소와 전화번호 등 기본적인 컨택트 정보가 있는 페이지입니다. 컨택트 폼을 추가하려면 플러그인을 설치하면 됩니다.</p>\n<!-- /wp:paragraph -->','문의','','auto-draft','closed','closed','','','','','2021-07-08 19:51:12','0000-00-00 00:00:00','',0,'https://skim.42.fr/?page_id=7',0,'page','',0),(8,1,'2021-07-08 19:51:12','0000-00-00 00:00:00','','블로그','','auto-draft','closed','closed','','','','','2021-07-08 19:51:12','0000-00-00 00:00:00','',0,'https://skim.42.fr/?page_id=8',0,'page','',0),(9,1,'2021-07-08 19:51:12','0000-00-00 00:00:00','{\n    \"nav_menus_created_posts\": {\n        \"starter_content\": true,\n        \"value\": [\n            5,\n            6,\n            7,\n            8\n        ],\n        \"type\": \"option\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    },\n    \"nav_menu[-1]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"name\": \"Primary menu\"\n        },\n        \"type\": \"nav_menu\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    },\n    \"nav_menu_item[-1]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"type\": \"custom\",\n            \"title\": \"\\ud648\",\n            \"url\": \"https://skim.42.fr/\",\n            \"position\": 0,\n            \"nav_menu_term_id\": -1,\n            \"object_id\": 0\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    },\n    \"nav_menu_item[-2]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"type\": \"post_type\",\n            \"object\": \"page\",\n            \"object_id\": 6,\n            \"position\": 1,\n            \"nav_menu_term_id\": -1,\n            \"title\": \"\\uc18c\\uac1c\"\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    },\n    \"nav_menu_item[-3]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"type\": \"post_type\",\n            \"object\": \"page\",\n            \"object_id\": 8,\n            \"position\": 2,\n            \"nav_menu_term_id\": -1,\n            \"title\": \"\\ube14\\ub85c\\uadf8\"\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    },\n    \"nav_menu_item[-4]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"type\": \"post_type\",\n            \"object\": \"page\",\n            \"object_id\": 7,\n            \"position\": 3,\n            \"nav_menu_term_id\": -1,\n            \"title\": \"\\ubb38\\uc758\"\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    },\n    \"twentytwentyone::nav_menu_locations[primary]\": {\n        \"starter_content\": true,\n        \"value\": -1,\n        \"type\": \"theme_mod\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    },\n    \"nav_menu[-5]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"name\": \"Secondary menu\"\n        },\n        \"type\": \"nav_menu\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    },\n    \"nav_menu_item[-5]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"title\": \"\\ud398\\uc774\\uc2a4\\ubd81\",\n            \"url\": \"https://www.facebook.com/wordpress\",\n            \"position\": 0,\n            \"nav_menu_term_id\": -5,\n            \"object_id\": 0\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    },\n    \"nav_menu_item[-6]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"title\": \"\\ud2b8\\uc704\\ud130\",\n            \"url\": \"https://twitter.com/wordpress\",\n            \"position\": 1,\n            \"nav_menu_term_id\": -5,\n            \"object_id\": 0\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    },\n    \"nav_menu_item[-7]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"title\": \"\\uc778\\uc2a4\\ud0c0\\uadf8\\ub7a8\",\n            \"url\": \"https://www.instagram.com/explore/tags/wordcamp/\",\n            \"position\": 2,\n            \"nav_menu_term_id\": -5,\n            \"object_id\": 0\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    },\n    \"nav_menu_item[-8]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"title\": \"\\uc774\\uba54\\uc77c\",\n            \"url\": \"mailto:wordpress@example.com\",\n            \"position\": 3,\n            \"nav_menu_term_id\": -5,\n            \"object_id\": 0\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    },\n    \"twentytwentyone::nav_menu_locations[footer]\": {\n        \"starter_content\": true,\n        \"value\": -5,\n        \"type\": \"theme_mod\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    },\n    \"show_on_front\": {\n        \"starter_content\": true,\n        \"value\": \"page\",\n        \"type\": \"option\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    },\n    \"page_on_front\": {\n        \"starter_content\": true,\n        \"value\": 5,\n        \"type\": \"option\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    },\n    \"page_for_posts\": {\n        \"starter_content\": true,\n        \"value\": 8,\n        \"type\": \"option\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:12\"\n    }\n}','','','auto-draft','closed','closed','','79d04bb2-dfb3-4da6-8386-0b439e5ff8ab','','','2021-07-08 19:51:12','0000-00-00 00:00:00','',0,'https://skim.42.fr/?p=9',0,'customize_changeset','',0),(10,1,'2021-07-08 19:51:23','0000-00-00 00:00:00','\n					<!-- wp:heading {\"align\":\"wide\",\"fontSize\":\"gigantic\",\"style\":{\"typography\":{\"lineHeight\":\"1.1\"}}} -->\n					<h2 class=\"alignwide has-text-align-wide has-gigantic-font-size\" style=\"line-height:1.1\">Create your website with blocks</h2>\n					<!-- /wp:heading -->\n\n					<!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:columns {\"verticalAlignment\":\"center\",\"align\":\"wide\",\"className\":\"is-style-twentytwentyone-columns-overlap\"} -->\n					<div class=\"wp-block-columns alignwide are-vertically-aligned-center is-style-twentytwentyone-columns-overlap\"><!-- wp:column {\"verticalAlignment\":\"center\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-center\"><!-- wp:image {\"align\":\"full\",\"sizeSlug\":\"large\"} -->\n					<figure class=\"wp-block-image alignfull size-large\"><img src=\"https://skim.42.fr/wp-content/themes/twentytwentyone/assets/images/roses-tremieres-hollyhocks-1884.jpg\" alt=\"&#8220;Roses Trémières&#8221; by Berthe Morisot\"/></figure>\n					<!-- /wp:image -->\n\n					<!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:image {\"align\":\"full\",\"sizeSlug\":\"large\",\"className\":\"is-style-twentytwentyone-image-frame\"} -->\n					<figure class=\"wp-block-image alignfull size-large is-style-twentytwentyone-image-frame\"><img src=\"https://skim.42.fr/wp-content/themes/twentytwentyone/assets/images/in-the-bois-de-boulogne.jpg\" alt=\"&#8220;In the Bois de Boulogne&#8221; by Berthe Morisot\"/></figure>\n					<!-- /wp:image --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column {\"verticalAlignment\":\"center\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-center\"><!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:image {\"sizeSlug\":\"large\",\"className\":\"alignfull size-full is-style-twentytwentyone-border\"} -->\n					<figure class=\"wp-block-image size-large alignfull size-full is-style-twentytwentyone-border\"><img src=\"https://skim.42.fr/wp-content/themes/twentytwentyone/assets/images/young-woman-in-mauve.jpg\" alt=\"&#8220;Young Woman in Mauve&#8221; by Berthe Morisot\"/></figure>\n					<!-- /wp:image --></div>\n					<!-- /wp:column --></div>\n					<!-- /wp:columns -->\n\n					<!-- wp:spacer {\"height\":50} -->\n					<div style=\"height:50px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:columns {\"verticalAlignment\":\"top\",\"align\":\"wide\"} -->\n					<div class=\"wp-block-columns alignwide are-vertically-aligned-top\"><!-- wp:column {\"verticalAlignment\":\"top\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-top\"><!-- wp:heading {\"level\":3} -->\n					<h3>Add block patterns</h3>\n					<!-- /wp:heading -->\n\n					<!-- wp:paragraph -->\n					<p>Block patterns are pre-designed groups of blocks. To add one, select the Add Block button [+] in the toolbar at the top of the editor. Switch to the Patterns tab underneath the search bar, and choose a pattern.</p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column {\"verticalAlignment\":\"top\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-top\"><!-- wp:heading {\"level\":3} -->\n					<h3>Frame your images</h3>\n					<!-- /wp:heading -->\n\n					<!-- wp:paragraph -->\n					<p>Twenty Twenty-One includes stylish borders for your content. With an Image block selected, open the &quot;Styles&quot; panel within the Editor sidebar. Select the &quot;Frame&quot; block style to activate it.</p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column {\"verticalAlignment\":\"top\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-top\"><!-- wp:heading {\"level\":3} -->\n					<h3>Overlap columns</h3>\n					<!-- /wp:heading -->\n\n					<!-- wp:paragraph -->\n					<p>Twenty Twenty-One also includes an overlap style for column blocks. With a Columns block selected, open the &quot;Styles&quot; panel within the Editor sidebar. Choose the &quot;Overlap&quot; block style to try it out.</p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column --></div>\n					<!-- /wp:columns -->\n\n					<!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:cover {\"overlayColor\":\"green\",\"contentPosition\":\"center center\",\"align\":\"wide\",\"className\":\"is-style-twentytwentyone-border\"} -->\n					<div class=\"wp-block-cover alignwide has-green-background-color has-background-dim is-style-twentytwentyone-border\"><div class=\"wp-block-cover__inner-container\"><!-- wp:spacer {\"height\":20} -->\n					<div style=\"height:20px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:paragraph {\"fontSize\":\"huge\"} -->\n					<p class=\"has-huge-font-size\">Need help?</p>\n					<!-- /wp:paragraph -->\n\n					<!-- wp:spacer {\"height\":75} -->\n					<div style=\"height:75px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:columns -->\n					<div class=\"wp-block-columns\"><!-- wp:column -->\n					<div class=\"wp-block-column\"><!-- wp:paragraph -->\n					<p><a href=\"https://wordpress.org/support/article/twenty-twenty-one/\">Read the Theme Documentation</a></p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column -->\n					<div class=\"wp-block-column\"><!-- wp:paragraph -->\n					<p><a href=\"https://wordpress.org/support/theme/twentytwentyone/\">Check out the Support Forums</a></p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column --></div>\n					<!-- /wp:columns -->\n\n					<!-- wp:spacer {\"height\":20} -->\n					<div style=\"height:20px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer --></div></div>\n					<!-- /wp:cover -->','Create your website with blocks','','auto-draft','closed','closed','','','','','2021-07-08 19:51:23','0000-00-00 00:00:00','',0,'https://skim.42.fr/?page_id=10',0,'page','',0),(11,1,'2021-07-08 19:51:23','0000-00-00 00:00:00','<!-- wp:paragraph -->\n<p>자신이나 자신의 작품을 이곳에 소개하고 싶어하는 예술가일 수도 있으며 임무가 있는 비지니스 일 수도 있습니다.</p>\n<!-- /wp:paragraph -->','소개','','auto-draft','closed','closed','','','','','2021-07-08 19:51:23','0000-00-00 00:00:00','',0,'https://skim.42.fr/?page_id=11',0,'page','',0),(12,1,'2021-07-08 19:51:23','0000-00-00 00:00:00','<!-- wp:paragraph -->\n<p>이것은 주소와 전화번호 등 기본적인 컨택트 정보가 있는 페이지입니다. 컨택트 폼을 추가하려면 플러그인을 설치하면 됩니다.</p>\n<!-- /wp:paragraph -->','문의','','auto-draft','closed','closed','','','','','2021-07-08 19:51:23','0000-00-00 00:00:00','',0,'https://skim.42.fr/?page_id=12',0,'page','',0),(13,1,'2021-07-08 19:51:23','0000-00-00 00:00:00','','블로그','','auto-draft','closed','closed','','','','','2021-07-08 19:51:23','0000-00-00 00:00:00','',0,'https://skim.42.fr/?page_id=13',0,'page','',0),(14,1,'2021-07-08 19:51:23','0000-00-00 00:00:00','{\n    \"nav_menus_created_posts\": {\n        \"starter_content\": true,\n        \"value\": [\n            10,\n            11,\n            12,\n            13\n        ],\n        \"type\": \"option\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    },\n    \"nav_menu[-1]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"name\": \"Primary menu\"\n        },\n        \"type\": \"nav_menu\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    },\n    \"nav_menu_item[-1]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"type\": \"custom\",\n            \"title\": \"\\ud648\",\n            \"url\": \"https://skim.42.fr/\",\n            \"position\": 0,\n            \"nav_menu_term_id\": -1,\n            \"object_id\": 0\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    },\n    \"nav_menu_item[-2]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"type\": \"post_type\",\n            \"object\": \"page\",\n            \"object_id\": 11,\n            \"position\": 1,\n            \"nav_menu_term_id\": -1,\n            \"title\": \"\\uc18c\\uac1c\"\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    },\n    \"nav_menu_item[-3]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"type\": \"post_type\",\n            \"object\": \"page\",\n            \"object_id\": 13,\n            \"position\": 2,\n            \"nav_menu_term_id\": -1,\n            \"title\": \"\\ube14\\ub85c\\uadf8\"\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    },\n    \"nav_menu_item[-4]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"type\": \"post_type\",\n            \"object\": \"page\",\n            \"object_id\": 12,\n            \"position\": 3,\n            \"nav_menu_term_id\": -1,\n            \"title\": \"\\ubb38\\uc758\"\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    },\n    \"twentytwentyone::nav_menu_locations[primary]\": {\n        \"starter_content\": true,\n        \"value\": -1,\n        \"type\": \"theme_mod\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    },\n    \"nav_menu[-5]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"name\": \"Secondary menu\"\n        },\n        \"type\": \"nav_menu\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    },\n    \"nav_menu_item[-5]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"title\": \"\\ud398\\uc774\\uc2a4\\ubd81\",\n            \"url\": \"https://www.facebook.com/wordpress\",\n            \"position\": 0,\n            \"nav_menu_term_id\": -5,\n            \"object_id\": 0\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    },\n    \"nav_menu_item[-6]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"title\": \"\\ud2b8\\uc704\\ud130\",\n            \"url\": \"https://twitter.com/wordpress\",\n            \"position\": 1,\n            \"nav_menu_term_id\": -5,\n            \"object_id\": 0\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    },\n    \"nav_menu_item[-7]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"title\": \"\\uc778\\uc2a4\\ud0c0\\uadf8\\ub7a8\",\n            \"url\": \"https://www.instagram.com/explore/tags/wordcamp/\",\n            \"position\": 2,\n            \"nav_menu_term_id\": -5,\n            \"object_id\": 0\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    },\n    \"nav_menu_item[-8]\": {\n        \"starter_content\": true,\n        \"value\": {\n            \"title\": \"\\uc774\\uba54\\uc77c\",\n            \"url\": \"mailto:wordpress@example.com\",\n            \"position\": 3,\n            \"nav_menu_term_id\": -5,\n            \"object_id\": 0\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    },\n    \"twentytwentyone::nav_menu_locations[footer]\": {\n        \"starter_content\": true,\n        \"value\": -5,\n        \"type\": \"theme_mod\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    },\n    \"show_on_front\": {\n        \"starter_content\": true,\n        \"value\": \"page\",\n        \"type\": \"option\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    },\n    \"page_on_front\": {\n        \"starter_content\": true,\n        \"value\": 10,\n        \"type\": \"option\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    },\n    \"page_for_posts\": {\n        \"starter_content\": true,\n        \"value\": 13,\n        \"type\": \"option\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:23\"\n    }\n}','','','auto-draft','closed','closed','','d6ab6f13-b813-4e57-ba7b-b197af183f37','','','2021-07-08 19:51:23','0000-00-00 00:00:00','',0,'https://skim.42.fr/?p=14',0,'customize_changeset','',0),(15,1,'2021-07-08 19:52:08','2021-07-08 10:52:08','\n					<!-- wp:heading {\"align\":\"wide\",\"fontSize\":\"gigantic\",\"style\":{\"typography\":{\"lineHeight\":\"1.1\"}}} -->\n					<h2 class=\"alignwide has-text-align-wide has-gigantic-font-size\" style=\"line-height:1.1\">Create your website with blocks</h2>\n					<!-- /wp:heading -->\n\n					<!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:columns {\"verticalAlignment\":\"center\",\"align\":\"wide\",\"className\":\"is-style-twentytwentyone-columns-overlap\"} -->\n					<div class=\"wp-block-columns alignwide are-vertically-aligned-center is-style-twentytwentyone-columns-overlap\"><!-- wp:column {\"verticalAlignment\":\"center\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-center\"><!-- wp:image {\"align\":\"full\",\"sizeSlug\":\"large\"} -->\n					<figure class=\"wp-block-image alignfull size-large\"><img src=\"https://skim.42.fr/wp-content/themes/twentytwentyone/assets/images/roses-tremieres-hollyhocks-1884.jpg\" alt=\"&#8220;Roses Trémières&#8221; by Berthe Morisot\"/></figure>\n					<!-- /wp:image -->\n\n					<!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:image {\"align\":\"full\",\"sizeSlug\":\"large\",\"className\":\"is-style-twentytwentyone-image-frame\"} -->\n					<figure class=\"wp-block-image alignfull size-large is-style-twentytwentyone-image-frame\"><img src=\"https://skim.42.fr/wp-content/themes/twentytwentyone/assets/images/in-the-bois-de-boulogne.jpg\" alt=\"&#8220;In the Bois de Boulogne&#8221; by Berthe Morisot\"/></figure>\n					<!-- /wp:image --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column {\"verticalAlignment\":\"center\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-center\"><!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:image {\"sizeSlug\":\"large\",\"className\":\"alignfull size-full is-style-twentytwentyone-border\"} -->\n					<figure class=\"wp-block-image size-large alignfull size-full is-style-twentytwentyone-border\"><img src=\"https://skim.42.fr/wp-content/themes/twentytwentyone/assets/images/young-woman-in-mauve.jpg\" alt=\"&#8220;Young Woman in Mauve&#8221; by Berthe Morisot\"/></figure>\n					<!-- /wp:image --></div>\n					<!-- /wp:column --></div>\n					<!-- /wp:columns -->\n\n					<!-- wp:spacer {\"height\":50} -->\n					<div style=\"height:50px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:columns {\"verticalAlignment\":\"top\",\"align\":\"wide\"} -->\n					<div class=\"wp-block-columns alignwide are-vertically-aligned-top\"><!-- wp:column {\"verticalAlignment\":\"top\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-top\"><!-- wp:heading {\"level\":3} -->\n					<h3>Add block patterns</h3>\n					<!-- /wp:heading -->\n\n					<!-- wp:paragraph -->\n					<p>Block patterns are pre-designed groups of blocks. To add one, select the Add Block button [+] in the toolbar at the top of the editor. Switch to the Patterns tab underneath the search bar, and choose a pattern.</p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column {\"verticalAlignment\":\"top\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-top\"><!-- wp:heading {\"level\":3} -->\n					<h3>Frame your images</h3>\n					<!-- /wp:heading -->\n\n					<!-- wp:paragraph -->\n					<p>Twenty Twenty-One includes stylish borders for your content. With an Image block selected, open the &quot;Styles&quot; panel within the Editor sidebar. Select the &quot;Frame&quot; block style to activate it.</p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column {\"verticalAlignment\":\"top\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-top\"><!-- wp:heading {\"level\":3} -->\n					<h3>Overlap columns</h3>\n					<!-- /wp:heading -->\n\n					<!-- wp:paragraph -->\n					<p>Twenty Twenty-One also includes an overlap style for column blocks. With a Columns block selected, open the &quot;Styles&quot; panel within the Editor sidebar. Choose the &quot;Overlap&quot; block style to try it out.</p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column --></div>\n					<!-- /wp:columns -->\n\n					<!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:cover {\"overlayColor\":\"green\",\"contentPosition\":\"center center\",\"align\":\"wide\",\"className\":\"is-style-twentytwentyone-border\"} -->\n					<div class=\"wp-block-cover alignwide has-green-background-color has-background-dim is-style-twentytwentyone-border\"><div class=\"wp-block-cover__inner-container\"><!-- wp:spacer {\"height\":20} -->\n					<div style=\"height:20px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:paragraph {\"fontSize\":\"huge\"} -->\n					<p class=\"has-huge-font-size\">Need help?</p>\n					<!-- /wp:paragraph -->\n\n					<!-- wp:spacer {\"height\":75} -->\n					<div style=\"height:75px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:columns -->\n					<div class=\"wp-block-columns\"><!-- wp:column -->\n					<div class=\"wp-block-column\"><!-- wp:paragraph -->\n					<p><a href=\"https://wordpress.org/support/article/twenty-twenty-one/\">Read the Theme Documentation</a></p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column -->\n					<div class=\"wp-block-column\"><!-- wp:paragraph -->\n					<p><a href=\"https://wordpress.org/support/theme/twentytwentyone/\">Check out the Support Forums</a></p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column --></div>\n					<!-- /wp:columns -->\n\n					<!-- wp:spacer {\"height\":20} -->\n					<div style=\"height:20px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer --></div></div>\n					<!-- /wp:cover -->','Create your website with blocks','','publish','closed','closed','','create-your-website-with-blocks','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',0,'https://skim.42.fr/?page_id=15',0,'page','',0),(16,1,'2021-07-08 19:52:08','2021-07-08 10:52:08','<!-- wp:paragraph -->\n<p>자신이나 자신의 작품을 이곳에 소개하고 싶어하는 예술가일 수도 있으며 임무가 있는 비지니스 일 수도 있습니다.</p>\n<!-- /wp:paragraph -->','소개','','publish','closed','closed','','%ec%86%8c%ea%b0%9c','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',0,'https://skim.42.fr/?page_id=16',0,'page','',0),(17,1,'2021-07-08 19:52:08','2021-07-08 10:52:08','<!-- wp:paragraph -->\n<p>이것은 주소와 전화번호 등 기본적인 컨택트 정보가 있는 페이지입니다. 컨택트 폼을 추가하려면 플러그인을 설치하면 됩니다.</p>\n<!-- /wp:paragraph -->','문의','','publish','closed','closed','','%eb%ac%b8%ec%9d%98','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',0,'https://skim.42.fr/?page_id=17',0,'page','',0),(18,1,'2021-07-08 19:52:08','2021-07-08 10:52:08','','블로그','','publish','closed','closed','','%eb%b8%94%eb%a1%9c%ea%b7%b8','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',0,'https://skim.42.fr/?page_id=18',0,'page','',0),(19,1,'2021-07-08 19:52:08','2021-07-08 10:52:08','{\n    \"nav_menus_created_posts\": {\n        \"starter_content\": true,\n        \"value\": [\n            15,\n            16,\n            17,\n            18\n        ],\n        \"type\": \"option\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:40\"\n    },\n    \"nav_menu[-1]\": {\n        \"value\": {\n            \"name\": \"Primary menu\",\n            \"description\": \"\",\n            \"parent\": 0,\n            \"auto_add\": false\n        },\n        \"type\": \"nav_menu\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:52:08\"\n    },\n    \"nav_menu_item[-1]\": {\n        \"value\": {\n            \"object_id\": 0,\n            \"object\": \"\",\n            \"menu_item_parent\": 0,\n            \"position\": 0,\n            \"type\": \"custom\",\n            \"title\": \"\\ud648\",\n            \"url\": \"https://skim.42.fr/\",\n            \"target\": \"\",\n            \"attr_title\": \"\",\n            \"description\": \"\",\n            \"classes\": \"\",\n            \"xfn\": \"\",\n            \"status\": \"publish\",\n            \"original_title\": \"\",\n            \"nav_menu_term_id\": -1,\n            \"_invalid\": false,\n            \"type_label\": \"\\uc0ac\\uc6a9\\uc790 \\uc815\\uc758 \\ub9c1\\ud06c\"\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:52:08\"\n    },\n    \"nav_menu_item[-2]\": {\n        \"value\": {\n            \"object_id\": 16,\n            \"object\": \"page\",\n            \"menu_item_parent\": 0,\n            \"position\": 1,\n            \"type\": \"post_type\",\n            \"title\": \"\\uc18c\\uac1c\",\n            \"url\": \"\",\n            \"target\": \"\",\n            \"attr_title\": \"\",\n            \"description\": \"\",\n            \"classes\": \"\",\n            \"xfn\": \"\",\n            \"status\": \"publish\",\n            \"original_title\": \"\\uc18c\\uac1c\",\n            \"nav_menu_term_id\": -1,\n            \"_invalid\": false,\n            \"type_label\": \"\\ud398\\uc774\\uc9c0\"\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:52:08\"\n    },\n    \"nav_menu_item[-3]\": {\n        \"value\": {\n            \"object_id\": 18,\n            \"object\": \"page\",\n            \"menu_item_parent\": 0,\n            \"position\": 2,\n            \"type\": \"post_type\",\n            \"title\": \"\\ube14\\ub85c\\uadf8\",\n            \"url\": \"\",\n            \"target\": \"\",\n            \"attr_title\": \"\",\n            \"description\": \"\",\n            \"classes\": \"\",\n            \"xfn\": \"\",\n            \"status\": \"publish\",\n            \"original_title\": \"\\ube14\\ub85c\\uadf8\",\n            \"nav_menu_term_id\": -1,\n            \"_invalid\": false,\n            \"type_label\": \"\\ud398\\uc774\\uc9c0\"\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:52:08\"\n    },\n    \"nav_menu_item[-4]\": {\n        \"value\": {\n            \"object_id\": 17,\n            \"object\": \"page\",\n            \"menu_item_parent\": 0,\n            \"position\": 3,\n            \"type\": \"post_type\",\n            \"title\": \"\\ubb38\\uc758\",\n            \"url\": \"\",\n            \"target\": \"\",\n            \"attr_title\": \"\",\n            \"description\": \"\",\n            \"classes\": \"\",\n            \"xfn\": \"\",\n            \"status\": \"publish\",\n            \"original_title\": \"\\ubb38\\uc758\",\n            \"nav_menu_term_id\": -1,\n            \"_invalid\": false,\n            \"type_label\": \"\\ud398\\uc774\\uc9c0\"\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:52:08\"\n    },\n    \"twentytwentyone::nav_menu_locations[primary]\": {\n        \"starter_content\": true,\n        \"value\": -1,\n        \"type\": \"theme_mod\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:40\"\n    },\n    \"nav_menu[-5]\": {\n        \"value\": {\n            \"name\": \"Secondary menu\",\n            \"description\": \"\",\n            \"parent\": 0,\n            \"auto_add\": false\n        },\n        \"type\": \"nav_menu\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:52:08\"\n    },\n    \"nav_menu_item[-5]\": {\n        \"value\": {\n            \"object_id\": 0,\n            \"object\": \"\",\n            \"menu_item_parent\": 0,\n            \"position\": 0,\n            \"type\": \"custom\",\n            \"title\": \"\\ud398\\uc774\\uc2a4\\ubd81\",\n            \"url\": \"https://www.facebook.com/wordpress\",\n            \"target\": \"\",\n            \"attr_title\": \"\",\n            \"description\": \"\",\n            \"classes\": \"\",\n            \"xfn\": \"\",\n            \"status\": \"publish\",\n            \"original_title\": \"\",\n            \"nav_menu_term_id\": -5,\n            \"_invalid\": false,\n            \"type_label\": \"\\uc0ac\\uc6a9\\uc790 \\uc815\\uc758 \\ub9c1\\ud06c\"\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:52:08\"\n    },\n    \"nav_menu_item[-6]\": {\n        \"value\": {\n            \"object_id\": 0,\n            \"object\": \"\",\n            \"menu_item_parent\": 0,\n            \"position\": 1,\n            \"type\": \"custom\",\n            \"title\": \"\\ud2b8\\uc704\\ud130\",\n            \"url\": \"https://twitter.com/wordpress\",\n            \"target\": \"\",\n            \"attr_title\": \"\",\n            \"description\": \"\",\n            \"classes\": \"\",\n            \"xfn\": \"\",\n            \"status\": \"publish\",\n            \"original_title\": \"\",\n            \"nav_menu_term_id\": -5,\n            \"_invalid\": false,\n            \"type_label\": \"\\uc0ac\\uc6a9\\uc790 \\uc815\\uc758 \\ub9c1\\ud06c\"\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:52:08\"\n    },\n    \"nav_menu_item[-7]\": {\n        \"value\": {\n            \"object_id\": 0,\n            \"object\": \"\",\n            \"menu_item_parent\": 0,\n            \"position\": 2,\n            \"type\": \"custom\",\n            \"title\": \"\\uc778\\uc2a4\\ud0c0\\uadf8\\ub7a8\",\n            \"url\": \"https://www.instagram.com/explore/tags/wordcamp/\",\n            \"target\": \"\",\n            \"attr_title\": \"\",\n            \"description\": \"\",\n            \"classes\": \"\",\n            \"xfn\": \"\",\n            \"status\": \"publish\",\n            \"original_title\": \"\",\n            \"nav_menu_term_id\": -5,\n            \"_invalid\": false,\n            \"type_label\": \"\\uc0ac\\uc6a9\\uc790 \\uc815\\uc758 \\ub9c1\\ud06c\"\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:52:08\"\n    },\n    \"nav_menu_item[-8]\": {\n        \"value\": {\n            \"object_id\": 0,\n            \"object\": \"\",\n            \"menu_item_parent\": 0,\n            \"position\": 3,\n            \"type\": \"custom\",\n            \"title\": \"\\uc774\\uba54\\uc77c\",\n            \"url\": \"mailto:wordpress@example.com\",\n            \"target\": \"\",\n            \"attr_title\": \"\",\n            \"description\": \"\",\n            \"classes\": \"\",\n            \"xfn\": \"\",\n            \"status\": \"publish\",\n            \"original_title\": \"\",\n            \"nav_menu_term_id\": -5,\n            \"_invalid\": false,\n            \"type_label\": \"\\uc0ac\\uc6a9\\uc790 \\uc815\\uc758 \\ub9c1\\ud06c\"\n        },\n        \"type\": \"nav_menu_item\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:52:08\"\n    },\n    \"twentytwentyone::nav_menu_locations[footer]\": {\n        \"starter_content\": true,\n        \"value\": -5,\n        \"type\": \"theme_mod\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:40\"\n    },\n    \"show_on_front\": {\n        \"starter_content\": true,\n        \"value\": \"page\",\n        \"type\": \"option\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:40\"\n    },\n    \"page_on_front\": {\n        \"starter_content\": true,\n        \"value\": 15,\n        \"type\": \"option\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:40\"\n    },\n    \"page_for_posts\": {\n        \"starter_content\": true,\n        \"value\": 18,\n        \"type\": \"option\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:51:40\"\n    },\n    \"twentytwentyone::background_color\": {\n        \"value\": \"#f9e8a4\",\n        \"type\": \"theme_mod\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:52:08\"\n    },\n    \"twentytwentyone::respect_user_color_preference\": {\n        \"value\": true,\n        \"type\": \"theme_mod\",\n        \"user_id\": 1,\n        \"date_modified_gmt\": \"2021-07-08 10:52:08\"\n    }\n}','','','trash','closed','closed','','4585d86f-f52c-468d-b8d0-a96be99ffbe9','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',0,'https://skim.42.fr/?p=19',0,'customize_changeset','',0),(20,1,'2021-07-08 19:52:08','2021-07-08 10:52:08','\n					<!-- wp:heading {\"align\":\"wide\",\"fontSize\":\"gigantic\",\"style\":{\"typography\":{\"lineHeight\":\"1.1\"}}} -->\n					<h2 class=\"alignwide has-text-align-wide has-gigantic-font-size\" style=\"line-height:1.1\">Create your website with blocks</h2>\n					<!-- /wp:heading -->\n\n					<!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:columns {\"verticalAlignment\":\"center\",\"align\":\"wide\",\"className\":\"is-style-twentytwentyone-columns-overlap\"} -->\n					<div class=\"wp-block-columns alignwide are-vertically-aligned-center is-style-twentytwentyone-columns-overlap\"><!-- wp:column {\"verticalAlignment\":\"center\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-center\"><!-- wp:image {\"align\":\"full\",\"sizeSlug\":\"large\"} -->\n					<figure class=\"wp-block-image alignfull size-large\"><img src=\"https://skim.42.fr/wp-content/themes/twentytwentyone/assets/images/roses-tremieres-hollyhocks-1884.jpg\" alt=\"&#8220;Roses Trémières&#8221; by Berthe Morisot\"/></figure>\n					<!-- /wp:image -->\n\n					<!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:image {\"align\":\"full\",\"sizeSlug\":\"large\",\"className\":\"is-style-twentytwentyone-image-frame\"} -->\n					<figure class=\"wp-block-image alignfull size-large is-style-twentytwentyone-image-frame\"><img src=\"https://skim.42.fr/wp-content/themes/twentytwentyone/assets/images/in-the-bois-de-boulogne.jpg\" alt=\"&#8220;In the Bois de Boulogne&#8221; by Berthe Morisot\"/></figure>\n					<!-- /wp:image --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column {\"verticalAlignment\":\"center\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-center\"><!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:image {\"sizeSlug\":\"large\",\"className\":\"alignfull size-full is-style-twentytwentyone-border\"} -->\n					<figure class=\"wp-block-image size-large alignfull size-full is-style-twentytwentyone-border\"><img src=\"https://skim.42.fr/wp-content/themes/twentytwentyone/assets/images/young-woman-in-mauve.jpg\" alt=\"&#8220;Young Woman in Mauve&#8221; by Berthe Morisot\"/></figure>\n					<!-- /wp:image --></div>\n					<!-- /wp:column --></div>\n					<!-- /wp:columns -->\n\n					<!-- wp:spacer {\"height\":50} -->\n					<div style=\"height:50px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:columns {\"verticalAlignment\":\"top\",\"align\":\"wide\"} -->\n					<div class=\"wp-block-columns alignwide are-vertically-aligned-top\"><!-- wp:column {\"verticalAlignment\":\"top\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-top\"><!-- wp:heading {\"level\":3} -->\n					<h3>Add block patterns</h3>\n					<!-- /wp:heading -->\n\n					<!-- wp:paragraph -->\n					<p>Block patterns are pre-designed groups of blocks. To add one, select the Add Block button [+] in the toolbar at the top of the editor. Switch to the Patterns tab underneath the search bar, and choose a pattern.</p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column {\"verticalAlignment\":\"top\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-top\"><!-- wp:heading {\"level\":3} -->\n					<h3>Frame your images</h3>\n					<!-- /wp:heading -->\n\n					<!-- wp:paragraph -->\n					<p>Twenty Twenty-One includes stylish borders for your content. With an Image block selected, open the &quot;Styles&quot; panel within the Editor sidebar. Select the &quot;Frame&quot; block style to activate it.</p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column {\"verticalAlignment\":\"top\"} -->\n					<div class=\"wp-block-column is-vertically-aligned-top\"><!-- wp:heading {\"level\":3} -->\n					<h3>Overlap columns</h3>\n					<!-- /wp:heading -->\n\n					<!-- wp:paragraph -->\n					<p>Twenty Twenty-One also includes an overlap style for column blocks. With a Columns block selected, open the &quot;Styles&quot; panel within the Editor sidebar. Choose the &quot;Overlap&quot; block style to try it out.</p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column --></div>\n					<!-- /wp:columns -->\n\n					<!-- wp:spacer -->\n					<div style=\"height:100px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:cover {\"overlayColor\":\"green\",\"contentPosition\":\"center center\",\"align\":\"wide\",\"className\":\"is-style-twentytwentyone-border\"} -->\n					<div class=\"wp-block-cover alignwide has-green-background-color has-background-dim is-style-twentytwentyone-border\"><div class=\"wp-block-cover__inner-container\"><!-- wp:spacer {\"height\":20} -->\n					<div style=\"height:20px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:paragraph {\"fontSize\":\"huge\"} -->\n					<p class=\"has-huge-font-size\">Need help?</p>\n					<!-- /wp:paragraph -->\n\n					<!-- wp:spacer {\"height\":75} -->\n					<div style=\"height:75px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer -->\n\n					<!-- wp:columns -->\n					<div class=\"wp-block-columns\"><!-- wp:column -->\n					<div class=\"wp-block-column\"><!-- wp:paragraph -->\n					<p><a href=\"https://wordpress.org/support/article/twenty-twenty-one/\">Read the Theme Documentation</a></p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column -->\n\n					<!-- wp:column -->\n					<div class=\"wp-block-column\"><!-- wp:paragraph -->\n					<p><a href=\"https://wordpress.org/support/theme/twentytwentyone/\">Check out the Support Forums</a></p>\n					<!-- /wp:paragraph --></div>\n					<!-- /wp:column --></div>\n					<!-- /wp:columns -->\n\n					<!-- wp:spacer {\"height\":20} -->\n					<div style=\"height:20px\" aria-hidden=\"true\" class=\"wp-block-spacer\"></div>\n					<!-- /wp:spacer --></div></div>\n					<!-- /wp:cover -->','Create your website with blocks','','inherit','closed','closed','','15-revision-v1','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',15,'https://skim.42.fr/?p=20',0,'revision','',0),(21,1,'2021-07-08 19:52:08','2021-07-08 10:52:08','<!-- wp:paragraph -->\n<p>자신이나 자신의 작품을 이곳에 소개하고 싶어하는 예술가일 수도 있으며 임무가 있는 비지니스 일 수도 있습니다.</p>\n<!-- /wp:paragraph -->','소개','','inherit','closed','closed','','16-revision-v1','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',16,'https://skim.42.fr/?p=21',0,'revision','',0),(22,1,'2021-07-08 19:52:08','2021-07-08 10:52:08','<!-- wp:paragraph -->\n<p>이것은 주소와 전화번호 등 기본적인 컨택트 정보가 있는 페이지입니다. 컨택트 폼을 추가하려면 플러그인을 설치하면 됩니다.</p>\n<!-- /wp:paragraph -->','문의','','inherit','closed','closed','','17-revision-v1','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',17,'https://skim.42.fr/?p=22',0,'revision','',0),(23,1,'2021-07-08 19:52:08','2021-07-08 10:52:08','','블로그','','inherit','closed','closed','','18-revision-v1','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',18,'https://skim.42.fr/?p=23',0,'revision','',0),(24,1,'2021-07-08 19:52:08','2021-07-08 10:52:08','','홈','','publish','closed','closed','','%ed%99%88','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',0,'https://skim.42.fr/?p=24',0,'nav_menu_item','',0),(25,1,'2021-07-08 19:52:08','2021-07-08 10:52:08',' ','','','publish','closed','closed','','25','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',0,'https://skim.42.fr/?p=25',1,'nav_menu_item','',0),(26,1,'2021-07-08 19:52:08','2021-07-08 10:52:08',' ','','','publish','closed','closed','','26','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',0,'https://skim.42.fr/?p=26',2,'nav_menu_item','',0),(27,1,'2021-07-08 19:52:08','2021-07-08 10:52:08',' ','','','publish','closed','closed','','27','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',0,'https://skim.42.fr/?p=27',3,'nav_menu_item','',0),(28,1,'2021-07-08 19:52:08','2021-07-08 10:52:08','','페이스북','','publish','closed','closed','','%ed%8e%98%ec%9d%b4%ec%8a%a4%eb%b6%81','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',0,'https://skim.42.fr/?p=28',0,'nav_menu_item','',0),(29,1,'2021-07-08 19:52:08','2021-07-08 10:52:08','','트위터','','publish','closed','closed','','%ed%8a%b8%ec%9c%84%ed%84%b0','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',0,'https://skim.42.fr/?p=29',1,'nav_menu_item','',0),(30,1,'2021-07-08 19:52:08','2021-07-08 10:52:08','','인스타그램','','publish','closed','closed','','%ec%9d%b8%ec%8a%a4%ed%83%80%ea%b7%b8%eb%9e%a8','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',0,'https://skim.42.fr/?p=30',2,'nav_menu_item','',0),(31,1,'2021-07-08 19:52:08','2021-07-08 10:52:08','','이메일','','publish','closed','closed','','%ec%9d%b4%eb%a9%94%ec%9d%bc','','','2021-07-08 19:52:08','2021-07-08 10:52:08','',0,'https://skim.42.fr/?p=31',3,'nav_menu_item','',0);
-/*!40000 ALTER TABLE `wp_posts` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `wp_term_relationships`
---
-
-DROP TABLE IF EXISTS `wp_term_relationships`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `wp_term_relationships` (
-  `object_id` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `term_taxonomy_id` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `term_order` int(11) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`object_id`,`term_taxonomy_id`),
-  KEY `term_taxonomy_id` (`term_taxonomy_id`)
+  `comment_count` bigint(20) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `wp_term_relationships`
+-- 테이블의 덤프 데이터 `wp_posts`
 --
 
-LOCK TABLES `wp_term_relationships` WRITE;
-/*!40000 ALTER TABLE `wp_term_relationships` DISABLE KEYS */;
-INSERT INTO `wp_term_relationships` VALUES (1,1,0),(24,2,0),(25,2,0),(26,2,0),(27,2,0),(28,3,0),(29,3,0),(30,3,0),(31,3,0);
-/*!40000 ALTER TABLE `wp_term_relationships` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `wp_posts` (`ID`, `post_author`, `post_date`, `post_date_gmt`, `post_content`, `post_title`, `post_excerpt`, `post_status`, `comment_status`, `ping_status`, `post_password`, `post_name`, `to_ping`, `pinged`, `post_modified`, `post_modified_gmt`, `post_content_filtered`, `post_parent`, `guid`, `menu_order`, `post_type`, `post_mime_type`, `comment_count`) VALUES
+(1, 1, '2021-09-26 17:21:23', '2021-09-26 08:21:23', '<!-- wp:paragraph -->\n<p>워드프레스에 오신 것을 환영합니다. 이것은 첫 글입니다. 바로 편집하거나 삭제한 다음 쓰기 시작하세요!</p>\n<!-- /wp:paragraph -->', '안녕하세요!', '', 'publish', 'open', 'open', '', '%ec%95%88%eb%85%95%ed%95%98%ec%84%b8%ec%9a%94', '', '', '2021-09-26 17:21:23', '2021-09-26 08:21:23', '', 0, 'https://localhost/wordpress/?p=1', 0, 'post', '', 1),
+(2, 1, '2021-09-26 17:21:23', '2021-09-26 08:21:23', '<!-- wp:paragraph -->\n<p>예제 페이지입니다. 한 곳에서 유지하고 사이트 탐색(대부분의 경우 테마에서)에서 보일 것이기에 블로그 글과 다릅니다. 대부분의 사람은 잠재적 사이트 방문자에게 자신을 소개하는 소개 페이지로 시작합니다. 다음과 같이 말할 수 있습니다:</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:quote -->\n<blockquote class=\"wp-block-quote\"><p>안녕하세요! 낮에는 자전거 배달원, 밤에는 야심찬 배우이고, 여기는 나의 웹사이트입니다. 로스 앤젤레스에 살고 있고, 잭이라는 이름의 좋은 개를 기르고 있으며, 피나 콜라다를 좋아합니다. (그리고 빗 속을 걷는 것도요.)</p></blockquote>\n<!-- /wp:quote -->\n\n<!-- wp:paragraph -->\n<p>...또는 이런 것도요:</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:quote -->\n<blockquote class=\"wp-block-quote\"><p>XYZ 두히키 회사를 1971년에 세웠고, 공중에게 양질의 두히키를 제공하고 있습니다. 고담시에 위치하고 있는 XYZ는 2천 명 이상의 사람이 일하고 있고 고담 공동체에 대한 모든 종류의 멋진 일을 합니다.</p></blockquote>\n<!-- /wp:quote -->\n\n<!-- wp:paragraph -->\n<p>새 워드프레스 사용자라면, <a href=\"https://localhost/wordpress/wp-admin/\">알림판</a>에 가서 이 페이지를 지우고 콘텐츠의 새 페이지를 만드세요. 즐거운 시간되세요!</p>\n<!-- /wp:paragraph -->', '예제 페이지', '', 'publish', 'closed', 'open', '', '예제-페이지', '', '', '2021-09-26 17:21:23', '2021-09-26 08:21:23', '', 0, 'https://localhost/wordpress/?page_id=2', 0, 'page', '', 0),
+(3, 1, '2021-09-26 17:21:23', '2021-09-26 08:21:23', '<!-- wp:heading --><h2>우리는 누구인가요</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>웹사이트 주소는: https://localhost/wordpress.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>댓글</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>방문자가 사이트에 댓글을 남길 때 댓글 양식에 있는 자료, 스팸 감지를 도울 수 있는 방문자의 IP 주소와 브라우저 사용자 에이전트 문자열 또한 수집합니다.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>이메일에서 생성된 익명화된 문자열(해시로 불리기도 함)이 그라바타 서비스에 제공될 수도 있습니다. 사용하고 있는지 확인하기 위해서 입니다. 그라바타 서비스의 개인정보 처리방침은 다음에서 볼 수 있습니다: https://automattic.com/privacy/. 댓글 승인 후 프로필 사진이 댓글 문맥에 공개로 보이게 됩니다.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>미디어</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>웹사이트에 이미지를 업로드하면, 임베드한 위치 자료(EXIF GPS)를 포함하여 이미지 업로드를 지해야 합니다. 웹사이트에 방문하는 사람이 웹사이트에 있는 이미지에서 위치 자료를 다운로드하고 추출할 수 있습니다.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>쿠키</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>사이트에 댓글을 남기면 이름, 이메일 주소와 웹사이트를 쿠키에 ,저장할 것인지 선택할 수 있습니다. 이들은 여러분의 편의를 위한 것이기에 또 다른 댓글을 남길 때 세부사항을 채울 필요가 없습니다. 이 쿠키는 최근 1년 동안 남습니다.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>로그인 페이지를 방문하면, 브라우저가 쿠키를 수용하는지 임시 쿠키를 만들 것입니다. 이 쿠키는 개인정보를 포함하지 않고 브라우저를 닫으면 취소합니다.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>로그인 할 때, 로그인 정보를 저장하고 화면 보이기 선택을 저장하는 쿠키도 설정합니다. 로그인 쿠키는 최근 2일, 그리고 화면 옵션은 최근 1년입니다. “기억하기”를 선택하면, 로그인은 2주 동안 유지합니다. 계정을 로그아웃하면, 로그인 쿠키를 제거할 것입니다..</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>게시물을 편집하거나 발행하면, 추가 쿠키를 브라우저에 저장할 것입니다. 이 쿠키는 개인정보를 포함하지 않고 단순히 방금 편집한 게시물의 글 ID만 지시합니다.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>다른 웹사이트에서 임베드한 콘텐츠</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>이 사이트의 글은 임베드된 콘텐츠(예: 비디오, 이미지, 기사 등)가 포함될 수도 있습니다. 다른 웹사이트로부터 임베드된 콘텐츠는 방문자가 해당 다른 웹사이트를 방문한 것과 동일하게 작동됩니다.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>이 웹사이트는 계정을 가지고 있고 그 웹사이트에 로그인했다면 자신에 대한 자료를 수집하고, 쿠키를 사용하며, 추가 타사 추적을 임베드하고, 임베드한 콘텐츠와 상호작용하는 추적을 포함하는 임베드 콘텐츠와 상호작용을 모니터할 수도 있습니다.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>누구와 함께 자료를 공유하나요</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>비밀번호 재설정을 요청하면, 재설정 이메일에 IP 주소가 포함됩니다.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>얼마나 오래 자료를 유지하나요</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>댓글을 남기면, 댓글과 그 메타자료를 무기한 유지합니다. 검토 대기열에 보유하는 대신에 자동으로 다음 댓글을 인식하고 승인합니다.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>웹사이트에 등록한 사용자에 대해, 사용자 프로필에 제공한 개인정보도 저장합니다. 모든 사용자는 언제든 자신의 개인정보를 보고, 편집하거나, 지울 수 있습니다(사용자명은 바꿀 수 없습니다). 웹사이트 관리자는 그 정보를 보고 편집할 수도 있습니다.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>자료에 대해 어떤 권리를 가지고 있나요</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>사이트에 계정을 가지고 있거나, 댓글을 남겼다면, 제공한 어떤 자료이든 보유하고 있는 개인정보의 파일 내보내기를 받도록 요청할 수 있습니다. 또한 보유하고 있는 개인정보를 지우는 것도 요청할 수 있습니다. 이는 관리자, 법, 또는 보안 목적으로 보관해야 하는 자료를 포함하지 않습니다.</p><!-- /wp:paragraph --><!-- wp:heading --><h2>어디로 자료를 보내나요</h2><!-- /wp:heading --><!-- wp:paragraph --><p><strong class=\"privacy-policy-tutorial\">추천 텍스트: </strong>자동 스팸 감지 서비스를 통해 방문자 댓글을 확인할 수 있습니다.</p><!-- /wp:paragraph -->', '개인정보 처리방침', '', 'draft', 'closed', 'open', '', '개인정보-보호-정책', '', '', '2021-09-26 17:21:23', '2021-09-26 08:21:23', '', 0, 'https://localhost/wordpress/?page_id=3', 0, 'page', '', 0),
+(4, 1, '2021-09-26 17:21:31', '0000-00-00 00:00:00', '', '자동 임시글', '', 'auto-draft', 'open', 'open', '', '', '', '', '2021-09-26 17:21:31', '0000-00-00 00:00:00', '', 0, 'https://localhost/wordpress/?p=4', 0, 'post', '', 0);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `wp_term_taxonomy`
+-- 테이블 구조 `wp_termmeta`
 --
 
-DROP TABLE IF EXISTS `wp_term_taxonomy`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `wp_term_taxonomy` (
-  `term_taxonomy_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `term_id` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `taxonomy` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `parent` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `count` bigint(20) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`term_taxonomy_id`),
-  UNIQUE KEY `term_id_taxonomy` (`term_id`,`taxonomy`),
-  KEY `taxonomy` (`taxonomy`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `wp_term_taxonomy`
---
-
-LOCK TABLES `wp_term_taxonomy` WRITE;
-/*!40000 ALTER TABLE `wp_term_taxonomy` DISABLE KEYS */;
-INSERT INTO `wp_term_taxonomy` VALUES (1,1,'category','',0,1),(2,2,'nav_menu','',0,4),(3,3,'nav_menu','',0,4);
-/*!40000 ALTER TABLE `wp_term_taxonomy` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `wp_termmeta`
---
-
-DROP TABLE IF EXISTS `wp_termmeta`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wp_termmeta` (
-  `meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `term_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `meta_id` bigint(20) UNSIGNED NOT NULL,
+  `term_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `meta_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_value` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`meta_id`),
-  KEY `term_id` (`term_id`),
-  KEY `meta_key` (`meta_key`(191))
+  `meta_value` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `wp_termmeta`
+-- 테이블 구조 `wp_terms`
 --
 
-LOCK TABLES `wp_termmeta` WRITE;
-/*!40000 ALTER TABLE `wp_termmeta` DISABLE KEYS */;
-/*!40000 ALTER TABLE `wp_termmeta` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `wp_terms`
---
-
-DROP TABLE IF EXISTS `wp_terms`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wp_terms` (
-  `term_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `term_id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `slug` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `term_group` bigint(10) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`term_id`),
-  KEY `slug` (`slug`(191)),
-  KEY `name` (`name`(191))
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `term_group` bigint(10) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `wp_terms`
+-- 테이블의 덤프 데이터 `wp_terms`
 --
 
-LOCK TABLES `wp_terms` WRITE;
-/*!40000 ALTER TABLE `wp_terms` DISABLE KEYS */;
-INSERT INTO `wp_terms` VALUES (1,'미분류','%eb%af%b8-%eb%b6%84%eb%a5%98',0),(2,'Primary menu','primary-menu',0),(3,'Secondary menu','secondary-menu',0);
-/*!40000 ALTER TABLE `wp_terms` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `wp_terms` (`term_id`, `name`, `slug`, `term_group`) VALUES
+(1, '미분류', '%eb%af%b8-%eb%b6%84%eb%a5%98', 0);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `wp_usermeta`
+-- 테이블 구조 `wp_term_relationships`
 --
 
-DROP TABLE IF EXISTS `wp_usermeta`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `wp_term_relationships` (
+  `object_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `term_taxonomy_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `term_order` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 테이블의 덤프 데이터 `wp_term_relationships`
+--
+
+INSERT INTO `wp_term_relationships` (`object_id`, `term_taxonomy_id`, `term_order`) VALUES
+(1, 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `wp_term_taxonomy`
+--
+
+CREATE TABLE `wp_term_taxonomy` (
+  `term_taxonomy_id` bigint(20) UNSIGNED NOT NULL,
+  `term_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `taxonomy` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parent` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `count` bigint(20) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 테이블의 덤프 데이터 `wp_term_taxonomy`
+--
+
+INSERT INTO `wp_term_taxonomy` (`term_taxonomy_id`, `term_id`, `taxonomy`, `description`, `parent`, `count`) VALUES
+(1, 1, 'category', '', 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `wp_usermeta`
+--
+
 CREATE TABLE `wp_usermeta` (
-  `umeta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `umeta_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `meta_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_value` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`umeta_id`),
-  KEY `user_id` (`user_id`),
-  KEY `meta_key` (`meta_key`(191))
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `meta_value` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `wp_usermeta`
+-- 테이블의 덤프 데이터 `wp_usermeta`
 --
 
-LOCK TABLES `wp_usermeta` WRITE;
-/*!40000 ALTER TABLE `wp_usermeta` DISABLE KEYS */;
-INSERT INTO `wp_usermeta` VALUES (1,1,'nickname','greenday'),(2,1,'first_name',''),(3,1,'last_name',''),(4,1,'description',''),(5,1,'rich_editing','true'),(6,1,'syntax_highlighting','true'),(7,1,'comment_shortcuts','false'),(8,1,'admin_color','fresh'),(9,1,'use_ssl','0'),(10,1,'show_admin_bar_front','true'),(11,1,'locale',''),(12,1,'wp_capabilities','a:1:{s:13:\"administrator\";b:1;}'),(13,1,'wp_user_level','10'),(14,1,'dismissed_wp_pointers',''),(15,1,'show_welcome_panel','1'),(16,1,'session_tokens','a:1:{s:64:\"d5c54869cb38c495c4d227534842657a77c36ffe4e6d93d82001c196c3251c10\";a:4:{s:10:\"expiration\";i:1625914234;s:2:\"ip\";s:10:\"172.29.0.1\";s:2:\"ua\";s:105:\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36\";s:5:\"login\";i:1625741434;}}'),(17,1,'wp_dashboard_quick_press_last_post_id','4'),(18,1,'community-events-location','a:1:{s:2:\"ip\";s:10:\"172.29.0.0\";}');
-/*!40000 ALTER TABLE `wp_usermeta` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `wp_usermeta` (`umeta_id`, `user_id`, `meta_key`, `meta_value`) VALUES
+(1, 1, 'nickname', 'username'),
+(2, 1, 'first_name', ''),
+(3, 1, 'last_name', ''),
+(4, 1, 'description', ''),
+(5, 1, 'rich_editing', 'true'),
+(6, 1, 'syntax_highlighting', 'true'),
+(7, 1, 'comment_shortcuts', 'false'),
+(8, 1, 'admin_color', 'fresh'),
+(9, 1, 'use_ssl', '0'),
+(10, 1, 'show_admin_bar_front', 'true'),
+(11, 1, 'locale', ''),
+(12, 1, 'wp_capabilities', 'a:1:{s:13:\"administrator\";b:1;}'),
+(13, 1, 'wp_user_level', '10'),
+(14, 1, 'dismissed_wp_pointers', ''),
+(15, 1, 'show_welcome_panel', '1'),
+(16, 1, 'session_tokens', 'a:1:{s:64:\"f73c08427d73de1d4b9dc9f30101eefd6f15ed36f0fab2d27a91517510cd75db\";a:4:{s:10:\"expiration\";i:1633854089;s:2:\"ip\";s:10:\"172.17.0.1\";s:2:\"ua\";s:120:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36\";s:5:\"login\";i:1632644489;}}'),
+(17, 1, 'wp_user-settings', 'unfold=1&ampampmfold=o&mfold=o'),
+(18, 1, 'wp_user-settings-time', '1632644486'),
+(19, 1, 'wp_dashboard_quick_press_last_post_id', '4'),
+(20, 1, 'community-events-location', 'a:1:{s:2:\"ip\";s:10:\"172.17.0.0\";}');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `wp_users`
+-- 테이블 구조 `wp_users`
 --
 
-DROP TABLE IF EXISTS `wp_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wp_users` (
-  `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `ID` bigint(20) UNSIGNED NOT NULL,
   `user_login` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `user_pass` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `user_nicename` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -292,13 +438,191 @@ CREATE TABLE `wp_users` (
   `user_registered` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `user_activation_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `user_status` int(11) NOT NULL DEFAULT 0,
-  `display_name` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`ID`),
-  KEY `user_login_key` (`user_login`),
-  KEY `user_nicename` (`user_nicename`),
-  KEY `user_email` (`user_email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `display_name` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 테이블의 덤프 데이터 `wp_users`
+--
 
 INSERT INTO `wp_users` VALUES (1, 'skim', '1234', 'skim', 'k_subin@naver.com', 'https://localhost', '2021-09-09 00:00:00', '', 0, '수빈');
 INSERT INTO `wp_users` VALUES (2, 'skim2', '1234', 'skim2', 'k_subin@naver.com', 'https://localhost', '2021-09-09 00:00:00', '', 0, '수빈2');
+--
+-- 덤프된 테이블의 인덱스
+--
+
+--
+-- 테이블의 인덱스 `wp_commentmeta`
+--
+ALTER TABLE `wp_commentmeta`
+  ADD PRIMARY KEY (`meta_id`),
+  ADD KEY `comment_id` (`comment_id`),
+  ADD KEY `meta_key` (`meta_key`(191));
+
+--
+-- 테이블의 인덱스 `wp_comments`
+--
+ALTER TABLE `wp_comments`
+  ADD PRIMARY KEY (`comment_ID`),
+  ADD KEY `comment_post_ID` (`comment_post_ID`),
+  ADD KEY `comment_approved_date_gmt` (`comment_approved`,`comment_date_gmt`),
+  ADD KEY `comment_date_gmt` (`comment_date_gmt`),
+  ADD KEY `comment_parent` (`comment_parent`),
+  ADD KEY `comment_author_email` (`comment_author_email`(10));
+
+--
+-- 테이블의 인덱스 `wp_links`
+--
+ALTER TABLE `wp_links`
+  ADD PRIMARY KEY (`link_id`),
+  ADD KEY `link_visible` (`link_visible`);
+
+--
+-- 테이블의 인덱스 `wp_options`
+--
+ALTER TABLE `wp_options`
+  ADD PRIMARY KEY (`option_id`),
+  ADD UNIQUE KEY `option_name` (`option_name`),
+  ADD KEY `autoload` (`autoload`);
+
+--
+-- 테이블의 인덱스 `wp_postmeta`
+--
+ALTER TABLE `wp_postmeta`
+  ADD PRIMARY KEY (`meta_id`),
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `meta_key` (`meta_key`(191));
+
+--
+-- 테이블의 인덱스 `wp_posts`
+--
+ALTER TABLE `wp_posts`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `post_name` (`post_name`(191)),
+  ADD KEY `type_status_date` (`post_type`,`post_status`,`post_date`,`ID`),
+  ADD KEY `post_parent` (`post_parent`),
+  ADD KEY `post_author` (`post_author`);
+
+--
+-- 테이블의 인덱스 `wp_termmeta`
+--
+ALTER TABLE `wp_termmeta`
+  ADD PRIMARY KEY (`meta_id`),
+  ADD KEY `term_id` (`term_id`),
+  ADD KEY `meta_key` (`meta_key`(191));
+
+--
+-- 테이블의 인덱스 `wp_terms`
+--
+ALTER TABLE `wp_terms`
+  ADD PRIMARY KEY (`term_id`),
+  ADD KEY `slug` (`slug`(191)),
+  ADD KEY `name` (`name`(191));
+
+--
+-- 테이블의 인덱스 `wp_term_relationships`
+--
+ALTER TABLE `wp_term_relationships`
+  ADD PRIMARY KEY (`object_id`,`term_taxonomy_id`),
+  ADD KEY `term_taxonomy_id` (`term_taxonomy_id`);
+
+--
+-- 테이블의 인덱스 `wp_term_taxonomy`
+--
+ALTER TABLE `wp_term_taxonomy`
+  ADD PRIMARY KEY (`term_taxonomy_id`),
+  ADD UNIQUE KEY `term_id_taxonomy` (`term_id`,`taxonomy`),
+  ADD KEY `taxonomy` (`taxonomy`);
+
+--
+-- 테이블의 인덱스 `wp_usermeta`
+--
+ALTER TABLE `wp_usermeta`
+  ADD PRIMARY KEY (`umeta_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `meta_key` (`meta_key`(191));
+
+--
+-- 테이블의 인덱스 `wp_users`
+--
+ALTER TABLE `wp_users`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `user_login_key` (`user_login`),
+  ADD KEY `user_nicename` (`user_nicename`),
+  ADD KEY `user_email` (`user_email`);
+
+--
+-- 덤프된 테이블의 AUTO_INCREMENT
+--
+
+--
+-- 테이블의 AUTO_INCREMENT `wp_commentmeta`
+--
+ALTER TABLE `wp_commentmeta`
+  MODIFY `meta_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `wp_comments`
+--
+ALTER TABLE `wp_comments`
+  MODIFY `comment_ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- 테이블의 AUTO_INCREMENT `wp_links`
+--
+ALTER TABLE `wp_links`
+  MODIFY `link_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `wp_options`
+--
+ALTER TABLE `wp_options`
+  MODIFY `option_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
+
+--
+-- 테이블의 AUTO_INCREMENT `wp_postmeta`
+--
+ALTER TABLE `wp_postmeta`
+  MODIFY `meta_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- 테이블의 AUTO_INCREMENT `wp_posts`
+--
+ALTER TABLE `wp_posts`
+  MODIFY `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- 테이블의 AUTO_INCREMENT `wp_termmeta`
+--
+ALTER TABLE `wp_termmeta`
+  MODIFY `meta_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `wp_terms`
+--
+ALTER TABLE `wp_terms`
+  MODIFY `term_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- 테이블의 AUTO_INCREMENT `wp_term_taxonomy`
+--
+ALTER TABLE `wp_term_taxonomy`
+  MODIFY `term_taxonomy_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- 테이블의 AUTO_INCREMENT `wp_usermeta`
+--
+ALTER TABLE `wp_usermeta`
+  MODIFY `umeta_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- 테이블의 AUTO_INCREMENT `wp_users`
+--
+ALTER TABLE `wp_users`
+  MODIFY `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
