@@ -6,7 +6,7 @@ server {
 	server_name skim.42.fr;
 
 	root /var/www/html;
-	index index.php index.html index.htm;
+	index wp-login.php index.php index.html index.htm;
 
 	ssl_protocols TLSv1.2 TLSv1.3;
 	ssl_certificate /etc/ssl/certs/skim.crt;
