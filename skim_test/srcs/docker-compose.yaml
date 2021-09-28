@@ -37,7 +37,6 @@ services:
     restart: always
     ports:
       - "443:443"
-    hostname: skim.42.fr
     volumes:
       - wp_data:/var/www/html
     networks:
