@@ -42,15 +42,18 @@ services:
 networks:
   intra:
 volumes:
-  wp_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: '/home/skim/data/wordpress'
-  db_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: '/home/skim/data/mariadb'
+  wp_data: {}
+  db_data: {}
+# volumes:
+#   wp_data:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       o: bind
+#       device: /home/skim/data/wordpress
+#   db_data:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       o: bind
+#       device: /home/skim/data/mariadb
