@@ -1,8 +1,5 @@
 version: '3'
 
-volumes:
-  wp_data: {}
-  db_data: {}
 services:
   mariadb:
     build : ./requirements/mariadb/
@@ -44,4 +41,16 @@ services:
     tty: true
 networks:
   intra:
-    driver: bridge
+volumes:
+  wp_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: '/home/skim/data/wordpress'
+  db_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: '/home/skim/data/mariadb'
