@@ -44,16 +44,17 @@ networks:
 volumes:
   wp_data: {}
   db_data: {}
+# imac에서는 아래와 같이 설정해야 함
 # volumes:
 #   wp_data:
 #     driver: local
 #     driver_opts:
 #       type: none
 #       o: bind
-#       device: /home/skim/data/wordpress
+#       device: ${HOME}/wordpress
 #   db_data:
 #     driver: local
 #     driver_opts:
 #       type: none
 #       o: bind
-#       device: /home/skim/data/mariadb
+#       device: ${HOME}/mariadb

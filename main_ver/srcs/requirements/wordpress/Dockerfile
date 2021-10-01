@@ -17,11 +17,11 @@ RUN		apt-get update -y; \
 
 RUN		mkdir -p /var/www/html
 
-RUN		wget https://wordpress.org/latest.tar.gz; \
-		tar -xvf latest.tar.gz
+RUN		wget https://wordpress.org/wordpress-5.8.1.tar.gz; \
+		tar -xvf wordpress-5.8.1.tar.gz
 
 RUN		cp -r /wordpress/* /var/www/html/; \
-		rm -rf /wordpress /latest.tar.gz
+		rm -rf /wordpress /wordpress-5.8.1.tar.gz
 
 RUN		chown -R www-data:www-data /var/www/html
 
