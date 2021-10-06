@@ -40,3 +40,8 @@ down_rmi:
 
 clear:
 	./$(SRC_DIR)/requirements/tools/clear.sh
+
+vb_setting:
+	sudo groupadd docker
+	sudo usermod -aG docker $USER
+	newgrp docker
