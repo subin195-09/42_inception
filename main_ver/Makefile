@@ -39,7 +39,7 @@ down_rmi:
 	$(RUN_COM) down --rmi all
 
 clear:
-	sh ./$(SRC_DIR)/requirements/tools/clear.sh
+	sh $(SRC_DIR)/requirements/tools/clear.sh
 
 vb_setting:
-	sh ./$(SRC_DIR)/requirements/tools/set_up.sh
+	sh $(SRC_DIR)/requirements/tools/set_up.sh
