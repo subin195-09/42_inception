@@ -2,6 +2,7 @@ version: '3'
 
 services:
   mariadb:
+    container_name: srcs_mariadb
     build : ./requirements/mariadb/
     restart: always
     volumes:
@@ -14,6 +15,7 @@ services:
     tty: true
 
   wordpress:
+    container_name: srcs_wordpress
     depends_on:
       - mariadb
     build: ./requirements/wordpress/
@@ -28,6 +30,7 @@ services:
     tty: true
 
   nginx:
+    container_name: srcs_nginx
     depends_on:
       - wordpress
     build: ./requirements/nginx/
@@ -41,20 +44,19 @@ services:
     tty: true
 networks:
   intra:
-volumes:
-  wp_data: {}
-  db_data: {}
-# imac에서는 아래와 같이 설정해야 함
 # volumes:
-#   wp_data:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       o: bind
-#       device: ${HOME}/wordpress
-#   db_data:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       o: bind
-#       device: ${HOME}/mariadb
+#   wp_data: {}
+#   db_data: {}
+volumes:
+  wp_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/wordpress
+  db_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/mariadb
