@@ -2,7 +2,6 @@ FROM	debian:buster
 
 LABEL	maintainer="skim@student.42seoul.kr"
 
-# 어떻게 mardiDb의 IP를 가져올 것인가아
 RUN		apt-get update -y; \
 		apt-get	upgrade -y; \
 		apt-get install -y mariadb-client; \
